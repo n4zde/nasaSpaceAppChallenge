@@ -9,8 +9,32 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/assets/app.css" />
+    <style>
+      #fire-intro {
+        position: fixed; inset: 0; z-index: 99999; pointer-events: none; overflow: hidden;
+        display: flex; align-items: center; justify-content: center;
+        animation: fire-fade 3.6s ease-in forwards;
+      }
+      #fire-intro::before {
+        content: ""; position: absolute; left: 50%; top: 50%;
+        width: 20vmax; height: 20vmax; margin: -10vmax 0 0 -10vmax; border-radius: 50%;
+        background: radial-gradient(circle, #ffd27a 0%, #ff9a2e 30%, #e8721c 55%, #a12818 80%, #6f1a13 100%);
+        transform: scale(0);
+        animation: fire-grow 3.6s cubic-bezier(.5, 0, .3, 1) forwards;
+      }
+      #fire-intro span {
+        position: relative; font-size: 96px;
+        animation: fire-emoji 3.6s ease-in forwards;
+      }
+      @keyframes fire-grow  { 0% { transform: scale(0); } 60%, 100% { transform: scale(6); } }
+      @keyframes fire-emoji { 0% { transform: scale(1); opacity: 1; } 55% { transform: scale(3); opacity: 1; } 70%, 100% { transform: scale(4); opacity: 0; } }
+      @keyframes fire-fade  { 0%, 65% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+      @media (prefers-reduced-motion: reduce) { #fire-intro { display: none; } }
+    </style>
   </head>
   <body>
+    <div id="fire-intro" aria-hidden="true"><span>🔥</span></div>
+    <script>setTimeout(function () { var e = document.getElementById('fire-intro'); if (e) e.remove(); }, 3800);</script>
     <noscript>Ember Atlas needs JavaScript.</noscript>
     <div id="root"></div>
     <script type="module" src="/assets/app.js"></script>

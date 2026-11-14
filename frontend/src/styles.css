@@ -286,3 +286,244 @@ table.data tr.best td { font-weight: 650; }
   .calendar-head .row { flex: 1 1 100% !important; flex-wrap: wrap; }
   .calendar-head .row select { width: 100% !important; flex: 1 1 100%; }
 }
+
+
+/* --- Ember effects: flame loader and red glow on press --- */
+@keyframes flame-flicker {
+  0%, 100% { transform: scale(1) rotate(-3deg); filter: drop-shadow(0 0 4px #ff7a18); }
+  25% { transform: scale(1.12) rotate(3deg); }
+  50% { transform: scale(0.95) rotate(-2deg); filter: drop-shadow(0 0 10px #ff3d00); }
+  75% { transform: scale(1.08) rotate(2deg); }
+}
+.flame { display: inline-block; font-size: 1.4em; transform-origin: 50% 90%; animation: flame-flicker 0.9s ease-in-out infinite; }
+.btn, .tabs button, .seg button, .dataset-switch button { transition: box-shadow .15s ease, transform .1s ease; }
+.btn:active, .tabs button:active, .seg button:active, .dataset-switch button:active {
+  box-shadow: 0 0 0 2px rgba(255, 60, 40, .55), 0 0 14px 4px rgba(255, 60, 40, .6);
+  transform: scale(0.97);
+}
+@media (prefers-reduced-motion: reduce) { .flame { animation: none; } }
+
+
+/* --- Centered, larger flame loader --- */
+.loading-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; text-align: center; gap: 12px; font-size: 18px; }
+.loading-screen .flame { font-size: 96px; }
+.loading-inline { text-align: center; }
+.loading-inline .flame { display: block; font-size: 64px; }
+ 
+
+/* --- Smooth fade-in when content replaces the loader --- */
+@keyframes fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.calendar, .keyfigs, .split, .tabs, .tabpanel { animation: fade-in .5s ease-out both; }
+.loading-screen, .loading-inline { animation: fade-in .4s ease-out both; }
+@media (prefers-reduced-motion: reduce) {
+  .app, .calendar, .keyfigs, .split, .tabs, .tabpanel, .loading-screen, .loading-inline { animation: none; }
+}
+
+.flame { display: none !important; }
+.loading-screen, .loading-inline { display: none !important; }/* Engellenen OSM harita karolarını gizle */
+.map-wrap img[src*="openstreetmap"],
+.map-wrap image[href*="openstreetmap"],
+.map-wrap image[*|href*="openstreetmap"] { display: none !important; }/* ===== Ember görünüm cilası ===== */
+
+/* Arka plana hafif ateş ışıması */
+body {
+  background:
+    radial-gradient(900px 420px at 85% -8%, color-mix(in srgb, #e8721c 16%, transparent), transparent 70%),
+    radial-gradient(700px 360px at 5% 0%, color-mix(in srgb, #a12818 12%, transparent), transparent 70%),
+    var(--paper);
+  background-attachment: fixed;
+}
+
+/* İnce kaydırma çubukları */
+* { scrollbar-width: thin; scrollbar-color: var(--rule-strong) transparent; }
+
+/* Başlık ve büyük rakamlar: ateş gradyanı */
+.calendar-head h1, .kf-value {
+  background: linear-gradient(90deg, var(--heat-3), var(--heat-4));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.kf-value .kf-delta, .kf-value .kf-unit { -webkit-text-fill-color: var(--ink); }
+.kf-value .kf-unit { -webkit-text-fill-color: var(--slate); }
+
+/* Kutular: yuvarlak köşe, derinlik, üstte ince turuncu çizgi */
+.kf-tile, .panel {
+  border-radius: 12px;
+  box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 8px 24px rgba(0,0,0,.16);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.kf-tile { border-top: 2px solid color-mix(in srgb, #e8721c 70%, transparent); }
+.kf-tile:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, #e8721c 55%, var(--rule));
+  box-shadow: 0 12px 30px rgba(0,0,0,.24), 0 0 18px color-mix(in srgb, #e8721c 18%, transparent);
+}
+
+/* Kutular sırayla belirsin */
+.kf-tile { animation: fade-in .5s ease-out both; }
+.kf-tile:nth-child(2) { animation-delay: .08s; }
+.kf-tile:nth-child(3) { animation-delay: .16s; }
+.kf-tile:nth-child(4) { animation-delay: .24s; }
+@media (prefers-reduced-motion: reduce) { .kf-tile { animation: none; transition: none; } }
+
+/* Sol panel */
+.rail { box-shadow: 4px 0 24px rgba(0,0,0,.14); }
+
+/* Butonlar ve seçiciler */
+.btn, .dataset-switch button, .seg button, .tabs button { transition: box-shadow .15s ease, border-color .15s ease, background .15s ease; }
+.btn:hover:not(:active), .seg button:hover:not(:active) {
+  border-color: #e8721c;
+  box-shadow: 0 0 12px color-mix(in srgb, #e8721c 35%, transparent);
+}
+.dataset-switch button[aria-pressed="true"]:not(.syn),
+.seg button[aria-pressed="true"],
+.btn.primary {
+  background: linear-gradient(135deg, #e8721c, #a12818);
+  color: #fff; border-color: transparent;
+}
+.tabs button[aria-selected="true"] { border-bottom-color: #e8721c; }
+select:focus, input:focus {
+  border-color: #e8721c;
+  box-shadow: 0 0 0 3px color-mix(in srgb, #e8721c 28%, transparent);
+  outline: none;
+}
+
+/* Takvim hücreleri üzerine gelince parlasın */
+.calendar rect.cell { transition: filter .12s ease; }
+.calendar rect.cell:hover { filter: brightness(1.3); }/* ===== Harita ===== */
+.map-wrap {
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 50% 45%, color-mix(in srgb, #e8721c 10%, transparent), transparent 65%),
+    var(--wash);
+  box-shadow: inset 0 0 0 1px var(--rule), inset 0 0 60px rgba(0,0,0,.25);
+}
+
+/* ===== "Selected period" paneli: turuncu vurgu çizgisi ===== */
+.split > .panel:last-child { border-left: 3px solid #e8721c; }
+
+/* ===== Lejant: hap şeklinde etiketler ===== */
+.legend .item {
+  background: var(--wash);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+/* ===== Sekmeler ===== */
+.tabs { gap: 4px; }
+.tabs button {
+  border-radius: 8px 8px 0 0;
+  transition: background .15s ease, color .15s ease;
+}
+.tabs button:hover {
+  background: color-mix(in srgb, #e8721c 10%, transparent);
+  color: var(--ink);
+}
+.tabs button[aria-selected="true"] {
+  background: color-mix(in srgb, #e8721c 12%, transparent);
+  border-bottom-color: #e8721c;
+}
+
+/* ===== Grafik paneli ===== */
+.tabpanel {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-top: 0;
+  border-radius: 0 0 12px 12px;
+  padding: 16px;
+}
+.chart .gridline { stroke-dasharray: 3 4; opacity: .55; }
+.chart svg path { stroke-linejoin: round; stroke-linecap: round; }
+/* ===== Küre paneli ===== */
+/* ===== Uzay boşluğunda dönen dünya ===== */
+.space-hero {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 32px 16px 22px;
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  background:
+    radial-gradient(600px 300px at 50% 55%, rgba(232, 114, 28, .12), transparent 70%),
+    radial-gradient(500px 260px at 15% 20%, rgba(106, 62, 161, .16), transparent 70%),
+    radial-gradient(500px 260px at 90% 85%, rgba(31, 95, 139, .14), transparent 70%),
+    radial-gradient(ellipse at center, #070b14 0%, #03050a 70%, #000 100%);
+}
+.space-hero.closed { padding: 12px 16px; text-align: left; }
+.space-hero.closed .stars { display: none; }
+
+/* Yıldız katmanları: 2200x1000 sanal alan, hero'nun ortasına hizalı */
+.space-hero .stars { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.space-hero .star-layer {
+  position: absolute; left: 50%; top: 50%;
+  margin: -500px 0 0 -1100px;
+  border-radius: 50%;
+  background: transparent;
+}
+.space-hero .star-layer.far  { width: 1px;   height: 1px; }
+.space-hero .star-layer.mid  { width: 1.5px; height: 1.5px; animation: twinkle-a 7s ease-in-out infinite alternate; will-change: opacity; }
+.space-hero .star-layer.near { width: 2.5px; height: 2.5px; animation: twinkle-b 4.5s ease-in-out infinite alternate; will-change: opacity; }
+@keyframes twinkle-a { from { opacity: 1; } to { opacity: .45; } }
+@keyframes twinkle-b { from { opacity: .55; } to { opacity: 1; } }
+
+/* Samanyolu bandı (blur yok, sadece gradyan) */
+.space-hero .mw {
+  position: absolute; left: -10%; width: 120%; top: 22%; height: 56%;
+  transform: rotate(-20deg);
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(190, 200, 255, .13), rgba(150, 160, 220, .05) 45%, transparent 70%),
+    radial-gradient(ellipse at 30% 55%, rgba(255, 210, 170, .05), transparent 55%);
+}
+
+.space-globe { position: relative; z-index: 1; }
+.space-caption { color: #c9d6dc; margin: 12px auto 0; max-width: 60ch; font-size: 13px; }
+
+.space-toggle {
+  position: absolute; top: 12px; right: 12px; z-index: 2;
+  background: rgba(0, 0, 0, .45); color: #e7edf1;
+  border-color: rgba(255, 255, 255, .25);
+}
+.space-hero.closed .space-toggle { position: static; }
+
+@media (prefers-reduced-motion: reduce) {
+  .space-hero .star-layer.mid, .space-hero .star-layer.near { animation: none; }
+}/* ===== Telefon ve küçük ekran uyumu ===== */
+@media (max-width: 860px) {
+  .topbar { padding: 8px 12px; gap: 8px; }
+  .wordmark { font-size: 22px; }
+  .dataset-switch { width: 100%; }
+  .dataset-switch button { flex: 1; }
+  .synthetic-band, .real-band, .offline-band { padding: 6px 12px; font-size: 13px; }
+
+  .main { padding: 12px 12px 32px; gap: 14px; }
+  .panel { padding: 10px; }
+  .calendar-head h1 { font-size: 22px; }
+
+  /* takvim dar ekranda yana kaydırılsın, hücreler ezilmesin */
+  .calendar-wrap, .calendar { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .calendar svg { min-width: 640px; }
+
+  /* sekmeler tek satırda yana kaydırılsın */
+  .tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tabs button { white-space: nowrap; flex: none; }
+  .tabs select { width: 100% !important; }
+  .tabpanel { padding: 12px; }
+
+  .kf-grid { grid-template-columns: 1fr 1fr; }
+  .kf-value { font-size: 22px; }
+  .kf-tile-wide { grid-column: auto; }
+
+  /* uzay alanı */
+  .space-hero { padding: 44px 8px 14px; }
+  .space-toggle { top: 8px; right: 8px; }
+  .space-caption { font-size: 12px; }
+}
+
+@media (max-width: 480px) {
+  .kf-grid { grid-template-columns: 1fr; }
+  .checks { grid-template-columns: 1fr; }
+  .calendar-head .row select { width: 100% !important; }
+  .tooltip { max-width: 200px; }
+}
