@@ -5,6 +5,7 @@ import { Chart, toMs } from "./components/Chart";
 import { CompareView, StatusChip } from "./components/CompareView";
 import { DetailPanel } from "./components/DetailPanel";
 import { ImportView } from "./components/ImportView";
+import { InfoPanel } from "./components/InfoPanel";
 import { KeyFigures } from "./components/KeyFigures";
 import { MapView } from "./components/MapView";
 import { MethodView } from "./components/MethodView";
@@ -227,6 +228,7 @@ export function App() {
       )}
       {!online && <div className="offline-band" role="status">You are offline. Basemap tiles and FIRMS downloads are unavailable; analysis against a local server still works.</div>}
 
+      <InfoPanel />
       <div className="layout">
         <Rail ui={ui} set={(p) => { set(p); if (p.aoi !== undefined || p.dataset) { setSelected(null); setPickedCell(null); } }} meta={meta} availablePlatforms={availablePlatforms}
           onStartDraw={() => setDrawing(true)} drawing={drawing} aoiError={aoiError} setAoiError={setAoiError} extent={extentOf(meta, ui.dataset)} />
