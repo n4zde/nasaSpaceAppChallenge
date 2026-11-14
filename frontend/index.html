@@ -13,28 +13,96 @@
       #fire-intro {
         position: fixed; inset: 0; z-index: 99999; pointer-events: none; overflow: hidden;
         display: flex; align-items: center; justify-content: center;
-        animation: fire-fade 3.6s ease-in forwards;
+        background: #000;
+        transition: opacity 1s ease-out;
       }
+      #fire-intro.done { opacity: 0; }
       #fire-intro::before {
         content: ""; position: absolute; left: 50%; top: 50%;
         width: 20vmax; height: 20vmax; margin: -10vmax 0 0 -10vmax; border-radius: 50%;
         background: radial-gradient(circle, #ffd27a 0%, #ff9a2e 30%, #e8721c 55%, #a12818 80%, #6f1a13 100%);
         transform: scale(0);
-        animation: fire-grow 3.6s cubic-bezier(.5, 0, .3, 1) forwards;
+        animation: fire-grow 3.2s cubic-bezier(.5, 0, .3, 1) forwards;
       }
       #fire-intro span {
         position: relative; font-size: 96px;
-        animation: fire-emoji 3.6s ease-in forwards;
+        animation: fire-emoji 3.2s ease-in forwards;
       }
-      @keyframes fire-grow  { 0% { transform: scale(0); } 60%, 100% { transform: scale(6); } }
-      @keyframes fire-emoji { 0% { transform: scale(1); opacity: 1; } 55% { transform: scale(3); opacity: 1; } 70%, 100% { transform: scale(4); opacity: 0; } }
-      @keyframes fire-fade  { 0%, 65% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+      @keyframes fire-grow {
+        0%   { transform: scale(0); opacity: 1; }
+        50%  { transform: scale(6); opacity: 1; }
+        100% { transform: scale(7); opacity: 0; }
+      }
+      @keyframes fire-emoji {
+        0%   { transform: scale(1); opacity: 1; }
+        40%  { transform: scale(3); opacity: 1; }
+        60%, 100% { transform: scale(4); opacity: 0; }
+      }
+
+      /* Alttan üste fırlayan kıvılcımlar */
+      #sparks { position: absolute; inset: 0; z-index: 2; overflow: hidden; }
+      #sparks i {
+        position: absolute; bottom: -12px; border-radius: 50%;
+        background: #ffe9a8;
+        box-shadow: 0 0 6px 2px #ffb347, 0 0 14px 4px #ff5a00;
+        opacity: 0;
+        animation-name: spark-rise;
+        animation-timing-function: cubic-bezier(.2, .6, .4, 1);
+        animation-fill-mode: both;
+      }
+      @keyframes spark-rise {
+        0%   { transform: translate(0, 0) scale(1); opacity: 0; }
+        10%  { opacity: 1; }
+        70%  { opacity: .9; }
+        100% { transform: translate(var(--dx), -115vh) scale(.3); opacity: 0; }
+      }
+
       @media (prefers-reduced-motion: reduce) { #fire-intro { display: none; } }
     </style>
   </head>
   <body>
-    <div id="fire-intro" aria-hidden="true"><span>🔥</span></div>
-    <script>setTimeout(function () { var e = document.getElementById('fire-intro'); if (e) e.remove(); }, 3800);</script>
+    <div id="fire-intro" aria-hidden="true">
+      <span>🔥</span>
+      <div id="sparks"></div>
+    </div>
+    <script>
+      (function () {
+        var box = document.getElementById('sparks');
+        for (var i = 0; i < 45; i++) {
+          var s = document.createElement('i');
+          var size = 2 + Math.random() * 4;
+          s.style.left = (Math.random() * 100) + 'vw';
+          s.style.width = s.style.height = size + 'px';
+          s.style.setProperty('--dx', ((Math.random() - 0.5) * 160) + 'px');
+          s.style.animationDuration = (1.2 + Math.random() * 1.0) + 's';
+          s.style.animationDelay = (Math.random() * 1.5) + 's';
+          box.appendChild(s);
+        }
+      })();
+
+      setTimeout(function () {
+        var el = document.getElementById('fire-intro');
+        if (!el) return;
+        el.classList.add('done');
+        setTimeout(function () { el.remove(); }, 1100);
+      }, 2600);
+    </script>    <script>
+      function showErr(msg) {
+        var d = document.getElementById('err-box');
+        if (!d) {
+          d = document.createElement('pre');
+          d.id = 'err-box';
+          d.style.cssText = 'position:fixed;left:0;right:0;bottom:0;max-height:50vh;overflow:auto;margin:0;padding:12px;background:#300;color:#fff;font:13px monospace;z-index:100000;white-space:pre-wrap';
+          document.body.appendChild(d);
+        }
+        d.textContent += msg + '\n\n';
+      }
+      window.addEventListener('error', function (e) {
+        var src = e.target && (e.target.src || e.target.href);
+        showErr(e.message ? e.message + ' (' + (e.filename || '') + ':' + e.lineno + ')' : 'Yüklenemedi: ' + src);
+      }, true);
+      window.addEventListener('unhandledrejection', function (e) { showErr(String(e.reason)); });
+    </script>
     <noscript>Ember Atlas needs JavaScript.</noscript>
     <div id="root"></div>
     <script type="module" src="/assets/app.js"></script>
