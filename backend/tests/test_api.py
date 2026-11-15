@@ -45,6 +45,18 @@ def test_health_and_meta(client):
     assert any(p["id"] == "chukotka-antimeridian" for p in meta["presets"])
 
 
+def test_watch_page_is_served_from_frontend_dist(client, tmp_path):
+    (tmp_path / "index.html").write_text("<html>app</html>", encoding="utf-8")
+    (tmp_path / "watch.html").write_text("<html>watch</html>", encoding="utf-8")
+    app = create_app(client.svc, frontend_dist=tmp_path)
+
+    with TestClient(app) as c:
+        response = c.get("/watch.html")
+
+    assert response.status_code == 200
+    assert response.text == "<html>watch</html>"
+
+
 def test_aoi_validation(client):
     ok = client.post("/api/aoi/validate", json={"aoi": "chukotka-antimeridian"}).json()
     assert ok["crosses_antimeridian"] and ok["parts"] == 2

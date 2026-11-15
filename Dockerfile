@@ -5,6 +5,7 @@ WORKDIR /web
 COPY frontend/package.json frontend/package-lock.json* ./
 RUN npm install --no-audit --no-fund
 COPY frontend/ ./
+COPY watch.html /watch.html
 RUN node build.mjs
 
 # Stage 2: Python runtime.

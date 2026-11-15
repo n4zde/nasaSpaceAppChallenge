@@ -1,4 +1,4 @@
-"""Application service: the single entry point used by the HTTP API and the CLI.
+﻿"""Application service: the single entry point used by the HTTP API and the CLI.
 
 Every analytical response carries a ``provenance`` block (method version,
 config fingerprint, data version, data origin, batches used, generation time)
@@ -432,15 +432,29 @@ class EmberService:
         return self.selection({**req, "date_start": ext[0], "date_end": ext[1], "platforms": [ref, src], "window": "week"})
 
     def evaluation_key(self, req: dict) -> str:
-        sel = self._calib_selection(req)
+        sel = (
+            self.selection(req)
+            if req.get("evaluation_date_scoped")
+            else self._calib_selection(req)
+        )
         ref, src = self._pair(req)
-        return self._key("evaluation", sel, {"ref": ref, "src": src, "B": req.get("bootstrap_reps")})
+        return self._key(
+            "evaluation",
+            sel,
+            {
+                "ref": ref,
+                "src": src,
+                "B": req.get("bootstrap_reps"),
+                "date_scoped": bool(req.get("evaluation_date_scoped")),
+            },
+        )
 
     def get_evaluation(self, req: dict) -> dict | None:
         return self._cached(self.evaluation_key(req))
 
     def run_evaluation(self, req: dict, progress=None) -> dict:
-        sel = self._calib_selection(req)
+        scoped = bool(req.get("evaluation_date_scoped"))
+        sel = self.selection(req) if scoped else self._calib_selection(req)
         ref, src = self._pair(req)
         key = self.evaluation_key(req)
 
@@ -449,13 +463,41 @@ class EmberService:
             from .science.status import sufficiency
 
             suff = sufficiency(pair.info, sel.cfg)
-            if not suff["passed"]:
-                res = {"pair": pair.info, "sufficiency": suff, "skipped": "insufficient overlapping evidence", "gates": {"passed": False, "checks": []}}
+
+            if not suff["passed"] and not scoped:
+                res = {
+                    "pair": pair.info,
+                    "sufficiency": suff,
+                    "skipped": "insufficient overlapping evidence",
+                    "gates": {"passed": False, "checks": []},
+                }
             else:
-                res = evaluate(pair, sel.cfg, bootstrap_reps=req.get("bootstrap_reps"))
+                res = evaluate(
+                    pair,
+                    sel.cfg,
+                    bootstrap_reps=req.get("bootstrap_reps"),
+                )
                 res["pair"] = pair.info
                 res["sufficiency"] = suff
-            res["provenance"] = self.provenance(sel, {"reference": ref, "source": src})
+
+                if scoped and not suff["passed"]:
+                    res["diagnostic_only"] = True
+                    res["validation_note"] = (
+                        "Date-scoped diagnostic evaluation. One or more "
+                        "minimum sufficiency requirements were not met. "
+                        "Do not treat this result as fully validated."
+                    )
+                    res.setdefault("gates", {})
+                    res["gates"]["passed"] = False
+                    res["gates"].setdefault("checks", []).append({
+                        "check": "Minimum sufficiency requirements",
+                        "passed": False,
+                        "detail": str(suff),
+                    })
+
+            res["provenance"] = self.provenance(
+                sel, {"reference": ref, "source": src}
+            )
             return res
 
         return self._once(key, compute)
@@ -943,7 +985,7 @@ def summary_sentence(kf: dict, aoi_label: str | None) -> str:
     unit = kf.get("basis", {}).get("unit", "detections")
     p0, p1 = t["period"]
     a, b = pd.Timestamp(p0), pd.Timestamp(p1)
-    span = f"{a.day} {MONTHS[a.month - 1][:3]}–{b.day} {MONTHS[b.month - 1][:3]} {b.year}"  # no %-d: not portable to Windows
+    span = f"{a.day} {MONTHS[a.month - 1][:3]}â€“{b.day} {MONTHS[b.month - 1][:3]} {b.year}"  # no %-d: not portable to Windows
     parts = []
     if t["value"] is None:
         parts.append(f"{span}: no observations in the series used here ({unit}). Choose another year or series.")

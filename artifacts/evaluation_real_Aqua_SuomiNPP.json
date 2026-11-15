@@ -1,0 +1,1743 @@
+{
+  "evaluation": {
+    "reference": "Aqua",
+    "source": "Suomi-NPP",
+    "mode": "hotspot_only",
+    "interval": 0.9,
+    "bootstrap_reps": 100,
+    "what_is_measured": "agreement with held-out reference-platform observations (not independent truth)",
+    "schemes": {
+      "temporal": {
+        "folds": [
+          {
+            "fold": "year 2018",
+            "train_units": 432600,
+            "test_units": 218400,
+            "buffer_units_removed": 4200,
+            "train_active": 16835,
+            "test_ref_total": 3470,
+            "harmonic_order": 2,
+            "interval_coverage": 0.8846153846153846,
+            "interval_mean_width": 58.2807692307692
+          },
+          {
+            "fold": "year 2019",
+            "train_units": 428400,
+            "test_units": 218400,
+            "buffer_units_removed": 8400,
+            "train_active": 15816,
+            "test_ref_total": 3923,
+            "harmonic_order": 1,
+            "interval_coverage": 0.9615384615384616,
+            "interval_mean_width": 79.75192307692305
+          },
+          {
+            "fold": "year 2020",
+            "train_units": 432600,
+            "test_units": 218400,
+            "buffer_units_removed": 4200,
+            "train_active": 15656,
+            "test_ref_total": 3800,
+            "harmonic_order": 2,
+            "interval_coverage": 0.8461538461538461,
+            "interval_mean_width": 65.7730769230769
+          }
+        ],
+        "methods": {
+          "raw_substitution": {
+            "label": "Raw substitution (source detections treated as reference detections)",
+            "kind": "baseline",
+            "cell_week": {
+              "n": 655200,
+              "mae": 0.10817002442002442,
+              "rmse": 1.4867500880026288,
+              "mean_poisson_deviance": 0.2893965250153774,
+              "bias": 0.1010576923076923,
+              "relative_bias": 5.915572232645403,
+              "median_abs_log_ratio": 0.0
+            },
+            "aoi_week": {
+              "n": 156,
+              "mae": 424.4423076923077,
+              "rmse": 596.3807239915774,
+              "mean_poisson_deviance": 585.3054038876763,
+              "bias": 424.4423076923077,
+              "relative_bias": 5.915572232645403,
+              "median_abs_log_ratio": 1.956186472096217
+            },
+            "aoi_week_per_fold": {
+              "year 2018": {
+                "n": 52,
+                "mae": 370.28846153846155,
+                "rmse": 542.8731435611822,
+                "mean_poisson_deviance": 502.7330632499095,
+                "bias": 370.28846153846155,
+                "relative_bias": 5.5489913544668585,
+                "median_abs_log_ratio": 1.9457468570878267
+              },
+              "year 2019": {
+                "n": 52,
+                "mae": 421.6730769230769,
+                "rmse": 577.4738588822075,
+                "mean_poisson_deviance": 567.6232649038009,
+                "bias": 421.6730769230769,
+                "relative_bias": 5.5893448891154724,
+                "median_abs_log_ratio": 1.9550450520473057
+              },
+              "year 2020": {
+                "n": 52,
+                "mae": 481.36538461538464,
+                "rmse": 662.4368620131628,
+                "mean_poisson_deviance": 685.5598835093186,
+                "bias": 481.36538461538464,
+                "relative_bias": 6.587105263157895,
+                "median_abs_log_ratio": 1.9644065390723533
+              }
+            },
+            "by_season": {
+              "DJF": {
+                "n": 39,
+                "mae": 124.41025641025641,
+                "rmse": 201.67452834856311,
+                "mean_poisson_deviance": 147.29966828782008,
+                "bias": 124.41025641025641,
+                "relative_bias": 3.578171091445428,
+                "median_abs_log_ratio": 1.5660874715604867
+              },
+              "JJA": {
+                "n": 39,
+                "mae": 665.6410256410256,
+                "rmse": 766.711124686442,
+                "mean_poisson_deviance": 974.7254765586354,
+                "bias": 665.6410256410256,
+                "relative_bias": 7.756199581714968,
+                "median_abs_log_ratio": 2.108277091319723
+              },
+              "MAM": {
+                "n": 39,
+                "mae": 99.15384615384616,
+                "rmse": 120.4516074761551,
+                "mean_poisson_deviance": 138.7562091868786,
+                "bias": 99.15384615384616,
+                "relative_bias": 6.128367670364501,
+                "median_abs_log_ratio": 2.044755983691946
+              },
+              "SON": {
+                "n": 39,
+                "mae": 808.5641025641025,
+                "rmse": 882.9794549980866,
+                "mean_poisson_deviance": 1080.4402615173713,
+                "bias": 808.5641025641025,
+                "relative_bias": 5.382147124082608,
+                "median_abs_log_ratio": 1.9967207014590744
+              }
+            },
+            "by_landcover": {}
+          },
+          "global_ratio": {
+            "label": "Single global ratio (train totals)",
+            "kind": "baseline",
+            "cell_week": {
+              "n": 655200,
+              "mae": 0.02016360134610383,
+              "rmse": 0.1998712732678618,
+              "mean_poisson_deviance": 0.14169751183636817,
+              "bias": 8.615191935413085e-05,
+              "relative_bias": 0.00504303918170522,
+              "median_abs_log_ratio": 0.0
+            },
+            "aoi_week": {
+              "n": 156,
+              "mae": 23.991817700053527,
+              "rmse": 42.06710639244238,
+              "mean_poisson_deviance": 14.381923416712064,
+              "bias": 0.3618380612873503,
+              "relative_bias": 0.005043039181705231,
+              "median_abs_log_ratio": 0.305400438618011
+            },
+            "aoi_week_per_fold": {
+              "year 2018": {
+                "n": 52,
+                "mae": 21.008741066906758,
+                "rmse": 36.451302915324206,
+                "mean_poisson_deviance": 13.368658667383643,
+                "bias": -5.014190957177424,
+                "relative_bias": -0.0751406137675003,
+                "median_abs_log_ratio": 0.3452618963979551
+              },
+              "year 2019": {
+                "n": 52,
+                "mae": 21.16212534771942,
+                "rmse": 35.18937598628686,
+                "mean_poisson_deviance": 9.156743630402373,
+                "bias": -5.3190959369647945,
+                "relative_bias": -0.07050547762482011,
+                "median_abs_log_ratio": 0.2832610608710947
+              },
+              "year 2020": {
+                "n": 52,
+                "mae": 29.804586685534396,
+                "rmse": 52.36348588635229,
+                "mean_poisson_deviance": 20.620367952350175,
+                "bias": 11.418801078004268,
+                "relative_bias": 0.1562572779095321,
+                "median_abs_log_ratio": 0.2893205066858633
+              }
+            },
+            "by_season": {
+              "DJF": {
+                "n": 39,
+                "mae": 13.439442808007907,
+                "rmse": 25.106591604105677,
+                "mean_poisson_deviance": 9.20257908270698,
+                "bias": -11.512287175643309,
+                "relative_bias": -0.33110560460921024,
+                "median_abs_log_ratio": 0.3634003970350278
+              },
+              "JJA": {
+                "n": 39,
+                "mae": 31.362628459472464,
+                "rmse": 53.87927830421276,
+                "mean_poisson_deviance": 22.655272545226225,
+                "bias": 23.355549800913185,
+                "relative_bias": 0.27214414168975626,
+                "median_abs_log_ratio": 0.28845882002878426
+              },
+              "MAM": {
+                "n": 39,
+                "mae": 6.448938674666678,
+                "rmse": 8.973139150314552,
+                "mean_poisson_deviance": 3.889649437298236,
+                "bias": 0.5403747473552386,
+                "relative_bias": 0.03339875617568036,
+                "median_abs_log_ratio": 0.3938679457214647
+              },
+              "SON": {
+                "n": 39,
+                "mae": 44.71626085806705,
+                "rmse": 58.86196532705307,
+                "mean_poisson_deviance": 21.78019260161681,
+                "bias": -10.936285127475712,
+                "relative_bias": -0.07279657278913684,
+                "median_abs_log_ratio": 0.2715259999469444
+              }
+            },
+            "by_landcover": {}
+          },
+          "seasonal_ratio": {
+            "label": "Paired conditional rate-ratio model (seasonal + land cover)",
+            "kind": "candidate",
+            "cell_week": {
+              "n": 655200,
+              "mae": 0.01979027503958565,
+              "rmse": 0.19584595343181635,
+              "mean_poisson_deviance": 0.1408636275494164,
+              "bias": 0.00023474771511677073,
+              "relative_bias": 0.013741329665371945,
+              "median_abs_log_ratio": 0.0
+            },
+            "aoi_week": {
+              "n": 156,
+              "mae": 19.72371683881608,
+              "rmse": 31.551380782059347,
+              "mean_poisson_deviance": 9.606763535042345,
+              "bias": 0.9859404034904392,
+              "relative_bias": 0.013741329665371975,
+              "median_abs_log_ratio": 0.2981557565860052
+            },
+            "aoi_week_per_fold": {
+              "year 2018": {
+                "n": 52,
+                "mae": 19.454039315529563,
+                "rmse": 31.537572876526745,
+                "mean_poisson_deviance": 9.350548028000306,
+                "bias": -10.260137123313067,
+                "relative_bias": -0.15375421625714106,
+                "median_abs_log_ratio": 0.3384633639001675
+              },
+              "year 2019": {
+                "n": 52,
+                "mae": 15.778942958626319,
+                "rmse": 22.06343662146899,
+                "mean_poisson_deviance": 5.720245513764154,
+                "bias": -0.7096147600995852,
+                "relative_bias": -0.009406058507565238,
+                "median_abs_log_ratio": 0.2528434223360387
+              },
+              "year 2020": {
+                "n": 52,
+                "mae": 23.93816824229236,
+                "rmse": 38.79504026640129,
+                "mean_poisson_deviance": 13.74949706336258,
+                "bias": 13.92757309388397,
+                "relative_bias": 0.1905878423373596,
+                "median_abs_log_ratio": 0.3044657997075273
+              }
+            },
+            "by_season": {
+              "DJF": {
+                "n": 39,
+                "mae": 10.571120793847982,
+                "rmse": 14.800037268909517,
+                "mean_poisson_deviance": 5.355094808872364,
+                "bias": 3.9908044740319006,
+                "relative_bias": 0.11477977469560775,
+                "median_abs_log_ratio": 0.3311545052948974
+              },
+              "JJA": {
+                "n": 39,
+                "mae": 30.51606917254986,
+                "rmse": 46.977668535861994,
+                "mean_poisson_deviance": 19.004190727198754,
+                "bias": -0.0170425455502422,
+                "relative_bias": -0.0001985835902179402,
+                "median_abs_log_ratio": 0.30485822116315303
+              },
+              "MAM": {
+                "n": 39,
+                "mae": 7.270212558597737,
+                "rmse": 10.050848676973967,
+                "mean_poisson_deviance": 4.826845096848575,
+                "bias": 1.246387499139148,
+                "relative_bias": 0.07703504352841009,
+                "median_abs_log_ratio": 0.40417043867773084
+              },
+              "SON": {
+                "n": 39,
+                "mae": 30.537464830268746,
+                "rmse": 38.14441654638536,
+                "mean_poisson_deviance": 9.240923507249692,
+                "bias": -1.276387813659049,
+                "relative_bias": -0.008496181043301401,
+                "median_abs_log_ratio": 0.1888643738139366
+              }
+            },
+            "by_landcover": {}
+          },
+          "nb_regression": {
+            "label": "Negative-binomial regression calibration",
+            "kind": "candidate",
+            "cell_week": {
+              "n": 655200,
+              "mae": 0.22068394993002965,
+              "rmse": 33.529047358732115,
+              "mean_poisson_deviance": 0.5153000659959805,
+              "bias": 0.2039876614944265,
+              "relative_bias": 11.940741160649354,
+              "median_abs_log_ratio": 0.0037679337328561085
+            },
+            "aoi_week": {
+              "n": 156,
+              "mae": 860.8975994175937,
+              "rmse": 3041.7984559459132,
+              "mean_poisson_deviance": 1487.873942895494,
+              "bias": 856.7481782765911,
+              "relative_bias": 11.940741160649354,
+              "median_abs_log_ratio": 0.9834720061259232
+            },
+            "aoi_week_per_fold": {
+              "year 2018": {
+                "n": 52,
+                "mae": 676.2223791993526,
+                "rmse": 3490.5954623144457,
+                "mean_poisson_deviance": 1158.9507499058022,
+                "bias": 674.2280062346617,
+                "relative_bias": 10.103704992565536,
+                "median_abs_log_ratio": 0.9562933534441668
+              },
+              "year 2019": {
+                "n": 52,
+                "mae": 1038.529348894235,
+                "rmse": 3238.1361787115193,
+                "mean_poisson_deviance": 1812.9725818847205,
+                "bias": 1032.4647436804887,
+                "relative_bias": 13.685487298339387,
+                "median_abs_log_ratio": 1.0421699636038677
+              },
+              "year 2020": {
+                "n": 52,
+                "mae": 867.9410701591933,
+                "rmse": 2255.6220752542276,
+                "mean_poisson_deviance": 1491.6984968959603,
+                "bias": 863.5517849146235,
+                "relative_bias": 11.817024425147478,
+                "median_abs_log_ratio": 0.9744513424875322
+              }
+            },
+            "by_season": {
+              "DJF": {
+                "n": 39,
+                "mae": 154.20288988800226,
+                "rmse": 502.36790306458823,
+                "mean_poisson_deviance": 221.1650327409673,
+                "bias": 146.24492263094106,
+                "relative_bias": 4.206159279208482,
+                "median_abs_log_ratio": 0.9574602356114436
+              },
+              "JJA": {
+                "n": 39,
+                "mae": 2495.1862464174965,
+                "rmse": 5894.529950212101,
+                "mean_poisson_deviance": 4604.00942986859,
+                "bias": 2492.8347567445285,
+                "relative_bias": 29.04707365193804,
+                "median_abs_log_ratio": 1.32418933771236
+              },
+              "MAM": {
+                "n": 39,
+                "mae": 17.084583119449594,
+                "rmse": 40.63687784131688,
+                "mean_poisson_deviance": 19.045182800406472,
+                "bias": 10.796355485468807,
+                "relative_bias": 0.667286630639118,
+                "median_abs_log_ratio": 0.5614333049776215
+              },
+              "SON": {
+                "n": 39,
+                "mae": 777.1166782454262,
+                "rmse": 1417.9715041431857,
+                "mean_poisson_deviance": 1107.2761261720136,
+                "bias": 777.1166782454262,
+                "relative_bias": 5.172819670860492,
+                "median_abs_log_ratio": 1.3225403094122319
+              }
+            },
+            "by_landcover": {}
+          }
+        },
+        "interval_coverage": 0.8974358974358975,
+        "interval_mean_width": 67.93525641025637,
+        "n_test_windows": 156
+      },
+      "spatial": {
+        "folds": [
+          {
+            "fold": "spatial fold 1/4",
+            "train_units": 360672,
+            "test_units": 161148,
+            "buffer_units_removed": 133380,
+            "train_active": 13938,
+            "test_ref_total": 2083,
+            "harmonic_order": 2,
+            "interval_coverage": 0.967948717948718,
+            "interval_mean_width": 23.379166666666652
+          },
+          {
+            "fold": "spatial fold 2/4",
+            "train_units": 355368,
+            "test_units": 168480,
+            "buffer_units_removed": 131352,
+            "train_active": 13819,
+            "test_ref_total": 2941,
+            "harmonic_order": 1,
+            "interval_coverage": 0.9423076923076923,
+            "interval_mean_width": 27.713782051282042
+          },
+          {
+            "fold": "spatial fold 3/4",
+            "train_units": 352872,
+            "test_units": 159120,
+            "buffer_units_removed": 143208,
+            "train_active": 13013,
+            "test_ref_total": 2526,
+            "harmonic_order": 2,
+            "interval_coverage": 0.9551282051282052,
+            "interval_mean_width": 25.82211538461537
+          },
+          {
+            "fold": "spatial fold 4/4",
+            "train_units": 348504,
+            "test_units": 166452,
+            "buffer_units_removed": 140244,
+            "train_active": 10800,
+            "test_ref_total": 3643,
+            "harmonic_order": 2,
+            "interval_coverage": 0.8717948717948718,
+            "interval_mean_width": 25.62756410256409
+          }
+        ],
+        "methods": {
+          "raw_substitution": {
+            "label": "Raw substitution (source detections treated as reference detections)",
+            "kind": "baseline",
+            "cell_week": {
+              "n": 655200,
+              "mae": 0.10817002442002442,
+              "rmse": 1.4867500880026288,
+              "mean_poisson_deviance": 0.2893965250153774,
+              "bias": 0.1010576923076923,
+              "relative_bias": 5.915572232645403,
+              "median_abs_log_ratio": 0.0
+            },
+            "aoi_week": {
+              "n": 624,
+              "mae": 106.1298076923077,
+              "rmse": 165.32754493847847,
+              "mean_poisson_deviance": 148.054106159919,
+              "bias": 106.11057692307692,
+              "relative_bias": 5.915572232645403,
+              "median_abs_log_ratio": 1.8437982901505237
+            },
+            "aoi_week_per_fold": {
+              "spatial fold 1/4": {
+                "n": 156,
+                "mae": 77.25,
+                "rmse": 120.7181767801693,
+                "mean_poisson_deviance": 107.70808276528959,
+                "bias": 77.21153846153847,
+                "relative_bias": 5.782525204032646,
+                "median_abs_log_ratio": 1.7812327646291388
+              },
+              "spatial fold 2/4": {
+                "n": 156,
+                "mae": 107.6923076923077,
+                "rmse": 157.8737730122651,
+                "mean_poisson_deviance": 149.6416561164694,
+                "bias": 107.67948717948718,
+                "relative_bias": 5.711662699761986,
+                "median_abs_log_ratio": 1.8462268109098894
+              },
+              "spatial fold 3/4": {
+                "n": 156,
+                "mae": 97.35897435897436,
+                "rmse": 142.73096442302983,
+                "mean_poisson_deviance": 136.3721254473489,
+                "bias": 97.35897435897436,
+                "relative_bias": 6.012668250197941,
+                "median_abs_log_ratio": 1.906446519760478
+              },
+              "spatial fold 4/4": {
+                "n": 156,
+                "mae": 142.21794871794873,
+                "rmse": 222.40425770689248,
+                "mean_poisson_deviance": 198.49456031056818,
+                "bias": 142.19230769230768,
+                "relative_bias": 6.088937688718089,
+                "median_abs_log_ratio": 1.8218538677336076
+              }
+            },
+            "by_season": {
+              "DJF": {
+                "n": 156,
+                "mae": 31.141025641025642,
+                "rmse": 63.61271038933118,
+                "mean_poisson_deviance": 38.53335487044332,
+                "bias": 31.102564102564102,
+                "relative_bias": 3.578171091445428,
+                "median_abs_log_ratio": 1.4242510182856534
+              },
+              "JJA": {
+                "n": 156,
+                "mae": 166.4102564102564,
+                "rmse": 227.02984667671183,
+                "mean_poisson_deviance": 245.91853638535963,
+                "bias": 166.4102564102564,
+                "relative_bias": 7.756199581714968,
+                "median_abs_log_ratio": 2.1609035117110933
+              },
+              "MAM": {
+                "n": 156,
+                "mae": 24.826923076923077,
+                "rmse": 33.46898679259766,
+                "mean_poisson_deviance": 36.26675455676916,
+                "bias": 24.78846153846154,
+                "relative_bias": 6.128367670364501,
+                "median_abs_log_ratio": 1.9033312448851598
+              },
+              "SON": {
+                "n": 156,
+                "mae": 202.14102564102564,
+                "rmse": 229.39809759343512,
+                "mean_poisson_deviance": 271.49777882710396,
+                "bias": 202.14102564102564,
+                "relative_bias": 5.382147124082608,
+                "median_abs_log_ratio": 1.875071628899684
+              }
+            },
+            "by_landcover": {}
+          },
+          "global_ratio": {
+            "label": "Single global ratio (train totals)",
+            "kind": "baseline",
+            "cell_week": {
+              "n": 655200,
+              "mae": 0.020238696948072402,
+              "rmse": 0.1984508053424838,
+              "mean_poisson_deviance": 0.14172610031538813,
+              "bias": 0.00037134852016946764,
+              "relative_bias": 0.02173747435138347,
+              "median_abs_log_ratio": 0.0
+            },
+            "aoi_week": {
+              "n": 624,
+              "mae": 7.300170828819764,
+              "rmse": 12.737230370855318,
+              "mean_poisson_deviance": 5.222492163311851,
+              "bias": 0.38991594617794106,
+              "relative_bias": 0.021737474351383474,
+              "median_abs_log_ratio": 0.408611759758222
+            },
+            "aoi_week_per_fold": {
+              "spatial fold 1/4": {
+                "n": 156,
+                "mae": 5.682698459569861,
+                "rmse": 8.7057291756668,
+                "mean_poisson_deviance": 4.4079637577746995,
+                "bias": -0.011307150942466994,
+                "relative_bias": -0.0008468149529644028,
+                "median_abs_log_ratio": 0.4206053002275638
+              },
+              "spatial fold 2/4": {
+                "n": 156,
+                "mae": 8.283431624344006,
+                "rmse": 14.06752934195187,
+                "mean_poisson_deviance": 6.074934988445788,
+                "bias": -0.3727552040419931,
+                "relative_bias": -0.019772122349728298,
+                "median_abs_log_ratio": 0.4635885525452472
+              },
+              "spatial fold 3/4": {
+                "n": 156,
+                "mae": 6.885337387877141,
+                "rmse": 10.884732266613302,
+                "mean_poisson_deviance": 4.7764386701420865,
+                "bias": 0.8799514637633009,
+                "relative_bias": 0.054343795861866565,
+                "median_abs_log_ratio": 0.41198873576603384
+              },
+              "spatial fold 4/4": {
+                "n": 156,
+                "mae": 8.349215843488047,
+                "rmse": 16.024532795010618,
+                "mean_poisson_deviance": 5.63063123688483,
+                "bias": 1.0637746759329232,
+                "relative_bias": 0.045552799738000554,
+                "median_abs_log_ratio": 0.29998575330919264
+              }
+            },
+            "by_season": {
+              "DJF": {
+                "n": 156,
+                "mae": 4.008353758068559,
+                "rmse": 9.041969583317403,
+                "mean_poisson_deviance": 3.9769293738147096,
+                "bias": -2.8261445152983513,
+                "relative_bias": -0.3251316699015802,
+                "median_abs_log_ratio": 0.4207863123509611
+              },
+              "JJA": {
+                "n": 156,
+                "mae": 10.239626051554387,
+                "rmse": 16.841708340203006,
+                "mean_poisson_deviance": 7.770905319689612,
+                "bias": 6.298522622913252,
+                "relative_bias": 0.29356723309664395,
+                "median_abs_log_ratio": 0.37468842443608963
+              },
+              "MAM": {
+                "n": 156,
+                "mae": 2.4924087497938343,
+                "rmse": 3.7334961786834926,
+                "mean_poisson_deviance": 2.5880004923346407,
+                "bias": 0.22287973483407603,
+                "relative_bias": 0.05510180449146729,
+                "median_abs_log_ratio": 0.4769752116101228
+              },
+              "SON": {
+                "n": 156,
+                "mae": 12.460294755862273,
+                "rmse": 16.41976865253015,
+                "mean_poisson_deviance": 6.554133467408446,
+                "bias": -2.1355940577372112,
+                "relative_bias": -0.05686169534169738,
+                "median_abs_log_ratio": 0.3420149456156777
+              }
+            },
+            "by_landcover": {}
+          },
+          "seasonal_ratio": {
+            "label": "Paired conditional rate-ratio model (seasonal + land cover)",
+            "kind": "candidate",
+            "cell_week": {
+              "n": 655200,
+              "mae": 0.01981552826872708,
+              "rmse": 0.19748247157316495,
+              "mean_poisson_deviance": 0.14086230051734913,
+              "bias": 2.1228161929499687e-05,
+              "relative_bias": 0.001242624112946323,
+              "median_abs_log_ratio": 0.0
+            },
+            "aoi_week": {
+              "n": 624,
+              "mae": 6.244296492083475,
+              "rmse": 10.731186747036768,
+              "mean_poisson_deviance": 4.066457686276942,
+              "bias": 0.022289570025974897,
+              "relative_bias": 0.0012426241129463358,
+              "median_abs_log_ratio": 0.3532950413671324
+            },
+            "aoi_week_per_fold": {
+              "spatial fold 1/4": {
+                "n": 156,
+                "mae": 4.488954927029038,
+                "rmse": 6.769119955459925,
+                "mean_poisson_deviance": 3.3433728808455325,
+                "bias": 0.015082405288794667,
+                "relative_bias": 0.0011295512362227403,
+                "median_abs_log_ratio": 0.37410100183731965
+              },
+              "spatial fold 2/4": {
+                "n": 156,
+                "mae": 6.784175012744483,
+                "rmse": 10.15656730007223,
+                "mean_poisson_deviance": 4.165309175145827,
+                "bias": 0.0741702252006565,
+                "relative_bias": 0.003934224798130708,
+                "median_abs_log_ratio": 0.40160424770798453
+              },
+              "spatial fold 3/4": {
+                "n": 156,
+                "mae": 5.281056941736431,
+                "rmse": 7.8360683612819475,
+                "mean_poisson_deviance": 3.5138701207908785,
+                "bias": 0.5432592635650966,
+                "relative_bias": 0.03355045333181119,
+                "median_abs_log_ratio": 0.32937278366936773
+              },
+              "spatial fold 4/4": {
+                "n": 156,
+                "mae": 8.42299908682395,
+                "rmse": 15.819376231195845,
+                "mean_poisson_deviance": 5.243278568325527,
+                "bias": -0.5433536139506484,
+                "relative_bias": -0.023267407020670094,
+                "median_abs_log_ratio": 0.31596969906760075
+              }
+            },
+            "by_season": {
+              "DJF": {
+                "n": 156,
+                "mae": 3.675335796622746,
+                "rmse": 6.952429281272477,
+                "mean_poisson_deviance": 3.1021591122204715,
+                "bias": 0.44463935377380903,
+                "relative_bias": 0.05115319999167714,
+                "median_abs_log_ratio": 0.3989842497381275
+              },
+              "JJA": {
+                "n": 156,
+                "mae": 9.18660395356973,
+                "rmse": 15.80693646979183,
+                "mean_poisson_deviance": 6.712601773539202,
+                "bias": -1.0670110665666988,
+                "relative_bias": -0.049732215830416794,
+                "median_abs_log_ratio": 0.3386747836442131
+              },
+              "MAM": {
+                "n": 156,
+                "mae": 2.6146380079456284,
+                "rmse": 3.825446598104913,
+                "mean_poisson_deviance": 2.7323820291291927,
+                "bias": 0.41422074672999887,
+                "relative_bias": 0.10240639697286819,
+                "median_abs_log_ratio": 0.5050695138638532
+              },
+              "SON": {
+                "n": 156,
+                "mae": 9.500608210195796,
+                "rmse": 12.157463586333618,
+                "mean_poisson_deviance": 3.7186878302188986,
+                "bias": 0.29730924616679033,
+                "relative_bias": 0.007916067998296517,
+                "median_abs_log_ratio": 0.24967401300264658
+              }
+            },
+            "by_landcover": {}
+          },
+          "nb_regression": {
+            "label": "Negative-binomial regression calibration",
+            "kind": "candidate",
+            "cell_week": {
+              "n": 655200,
+              "mae": 0.35664380874083246,
+              "rmse": 76.10712367500243,
+              "mean_poisson_deviance": 0.7846197285746933,
+              "bias": 0.34012261825723317,
+              "relative_bias": 19.909616678472187,
+              "median_abs_log_ratio": 0.003889470151162154
+            },
+            "aoi_week": {
+              "n": 624,
+              "mae": 359.0885280767888,
+              "rmse": 3411.3393800805616,
+              "mean_poisson_deviance": 662.8548549926556,
+              "bias": 357.1287491700948,
+              "relative_bias": 19.909616678472183,
+              "median_abs_log_ratio": 0.7836429283141702
+            },
+            "aoi_week_per_fold": {
+              "spatial fold 1/4": {
+                "n": 156,
+                "mae": 34.45488811097092,
+                "rmse": 113.59960502166525,
+                "mean_poisson_deviance": 45.396086736313315,
+                "bias": 31.9859071229773,
+                "relative_bias": 2.395488003449092,
+                "median_abs_log_ratio": 0.6208651317020482
+              },
+              "spatial fold 2/4": {
+                "n": 156,
+                "mae": 195.16567035181572,
+                "rmse": 668.6709396947955,
+                "mean_poisson_deviance": 321.74212646150454,
+                "bias": 193.78714757936004,
+                "relative_bias": 10.279087052832427,
+                "median_abs_log_ratio": 1.0227989600001433
+              },
+              "spatial fold 3/4": {
+                "n": 156,
+                "mae": 218.83559466729932,
+                "rmse": 1340.404611906513,
+                "mean_poisson_deviance": 395.9910145626594,
+                "bias": 216.81098976038368,
+                "relative_bias": 13.389752336745785,
+                "median_abs_log_ratio": 0.7821925047894283
+              },
+              "spatial fold 4/4": {
+                "n": 156,
+                "mae": 987.8979591770692,
+                "rmse": 6655.241186078839,
+                "mean_poisson_deviance": 1888.2901922101453,
+                "bias": 985.9309522176583,
+                "relative_bias": 42.21938746800842,
+                "median_abs_log_ratio": 0.7288564456484249
+              }
+            },
+            "by_season": {
+              "DJF": {
+                "n": 156,
+                "mae": 50.454732533568716,
+                "rmse": 320.5824746650611,
+                "mean_poisson_deviance": 80.60933275852524,
+                "bias": 47.56002890730748,
+                "relative_bias": 5.471507750398207,
+                "median_abs_log_ratio": 0.7106261940380881
+              },
+              "JJA": {
+                "n": 156,
+                "mae": 1157.862985981974,
+                "rmse": 6778.463243742408,
+                "mean_poisson_deviance": 2221.6877014455968,
+                "bias": 1156.577259258948,
+                "relative_bias": 53.906797862084225,
+                "median_abs_log_ratio": 0.8264485217735345
+              },
+              "MAM": {
+                "n": 156,
+                "mae": 5.7621791789463375,
+                "rmse": 22.867313540376617,
+                "mean_poisson_deviance": 8.331493188888752,
+                "bias": 3.4911059103397273,
+                "relative_bias": 0.8630943296560974,
+                "median_abs_log_ratio": 0.5461226421414149
+              },
+              "SON": {
+                "n": 156,
+                "mae": 222.27421461266613,
+                "rmse": 705.7517130662543,
+                "mean_poisson_deviance": 340.79089257761126,
+                "bias": 220.88660260378398,
+                "relative_bias": 5.881261308446885,
+                "median_abs_log_ratio": 1.1923774675787435
+              }
+            },
+            "by_landcover": {}
+          }
+        },
+        "interval_coverage": 0.9342948717948718,
+        "interval_mean_width": 25.635657051282035,
+        "n_test_windows": 156
+      }
+    },
+    "gates": {
+      "checks": [
+        {
+          "check": "temporal: beats raw_substitution on held-out AOI-week deviance",
+          "passed": true,
+          "detail": "9.61 vs 585"
+        },
+        {
+          "check": "temporal: beats global_ratio on held-out AOI-week deviance",
+          "passed": true,
+          "detail": "9.61 vs 14.4"
+        },
+        {
+          "check": "temporal: 90% predictive interval coverage within [0.8, 0.97]",
+          "passed": true,
+          "detail": "0.897"
+        },
+        {
+          "check": "spatial: beats raw_substitution on held-out AOI-week deviance",
+          "passed": true,
+          "detail": "4.07 vs 148"
+        },
+        {
+          "check": "spatial: beats global_ratio on held-out AOI-week deviance",
+          "passed": true,
+          "detail": "4.07 vs 5.22"
+        },
+        {
+          "check": "spatial: 90% predictive interval coverage within [0.8, 0.97]",
+          "passed": true,
+          "detail": "0.934"
+        }
+      ],
+      "passed": true
+    },
+    "pair": {
+      "reference": "Aqua",
+      "source": "Suomi-NPP",
+      "mode": "hotspot_only",
+      "calibration_window": "week",
+      "grid_km": 18,
+      "overlap_start": "2018-01-01",
+      "overlap_end": "2020-12-23",
+      "overlap_years": [
+        2018,
+        2019,
+        2020
+      ],
+      "n_units": 655200,
+      "n_paired_active_units": 24185,
+      "total_ref": 11193,
+      "total_src": 77406,
+      "n_spatial_blocks": 297,
+      "units_dropped_unknown_coverage": 0,
+      "landcover": [
+        "unknown"
+      ]
+    },
+    "sufficiency": {
+      "checks": [
+        {
+          "check": "paired active cell-weeks",
+          "value": 24185,
+          "required": 150,
+          "passed": true
+        },
+        {
+          "check": "Aqua quality detections in overlap",
+          "value": 11193,
+          "required": 500,
+          "passed": true
+        },
+        {
+          "check": "Suomi-NPP quality detections in overlap",
+          "value": 77406,
+          "required": 500,
+          "passed": true
+        },
+        {
+          "check": "overlap years",
+          "value": 3,
+          "required": 3,
+          "passed": true
+        },
+        {
+          "check": "spatial blocks",
+          "value": 297,
+          "required": 4,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    "provenance": {
+      "app_version": "0.1.0",
+      "method_version": "ember-method-1.0.0",
+      "method_fingerprint": "19f09ad1134cfb29",
+      "data_origin": "real",
+      "data_version": "b2-2-c0-0",
+      "synthetic": false,
+      "generated_at": "2026-11-14T19:05:36Z",
+      "store": "sqlite",
+      "batches": [
+        {
+          "id": 1,
+          "file_name": "MODIS_2018_2020.csv",
+          "file_sha256": "f6ec16c9372c5810f1a3e3bb8d9cbbd042bd8860bf344acda895c2c6efbed9b8",
+          "declared_source": "MODIS_SP",
+          "source_url": null,
+          "retrieved_at": null,
+          "imported_at": "2026-11-14T16:46:26Z",
+          "parser_version": "firms-csv-1.0.0",
+          "status": "complete"
+        },
+        {
+          "id": 2,
+          "file_name": "VIIRS_2018_2020_fixed.csv",
+          "file_sha256": "219f4acc366face77166c9111e5f459b69a7fc9cf21aa0c2afd81b274db16fb9",
+          "declared_source": "VIIRS_SNPP_SP",
+          "source_url": null,
+          "retrieved_at": null,
+          "imported_at": "2026-11-14T16:46:52Z",
+          "parser_version": "firms-csv-1.0.0",
+          "status": "complete"
+        }
+      ],
+      "selection": {
+        "origin": "real",
+        "aoi": {
+          "type": "MultiPolygon",
+          "coordinates": [
+            [
+              [
+                [
+                  25.5,
+                  35.5
+                ],
+                [
+                  45.0,
+                  35.5
+                ],
+                [
+                  45.0,
+                  42.5
+                ],
+                [
+                  25.5,
+                  42.5
+                ],
+                [
+                  25.5,
+                  35.5
+                ]
+              ]
+            ]
+          ]
+        },
+        "dates": [
+          "2018-01-01",
+          "2020-12-31"
+        ],
+        "platforms": [
+          "Aqua",
+          "Suomi-NPP"
+        ],
+        "streams": [
+          "SP"
+        ],
+        "grid_km": 18,
+        "window": "week",
+        "aoi_label": "Pilot: T\u00fcrkiye",
+        "aoi_area_km2": 1311874.2,
+        "quality": {
+          "min_confidence": "nominal",
+          "exclude_fire_types": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      "reference": "Aqua",
+      "source": "Suomi-NPP"
+    }
+  },
+  "harmonization": {
+    "pair": {
+      "reference": "Aqua",
+      "source": "Suomi-NPP",
+      "mode": "hotspot_only",
+      "calibration_window": "week",
+      "grid_km": 18,
+      "overlap_start": "2018-01-01",
+      "overlap_end": "2020-12-23",
+      "overlap_years": [
+        2018,
+        2019,
+        2020
+      ],
+      "n_units": 655200,
+      "n_paired_active_units": 24185,
+      "total_ref": 11193,
+      "total_src": 77406,
+      "n_spatial_blocks": 297,
+      "units_dropped_unknown_coverage": 0,
+      "landcover": [
+        "unknown"
+      ]
+    },
+    "sufficiency": {
+      "checks": [
+        {
+          "check": "paired active cell-weeks",
+          "value": 24185,
+          "required": 150,
+          "passed": true
+        },
+        {
+          "check": "Aqua quality detections in overlap",
+          "value": 11193,
+          "required": 500,
+          "passed": true
+        },
+        {
+          "check": "Suomi-NPP quality detections in overlap",
+          "value": 77406,
+          "required": 500,
+          "passed": true
+        },
+        {
+          "check": "overlap years",
+          "value": 3,
+          "required": 3,
+          "passed": true
+        },
+        {
+          "check": "spatial blocks",
+          "value": 297,
+          "required": 4,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    "status": {
+      "code": "research_estimate",
+      "label": "Research estimate (coverage-unadjusted, not validated)",
+      "show_harmonized": true,
+      "explanation": "Held-out agreement checks passed, but no valid-observation coverage was available, so differences in cloud/swath coverage are absorbed into the ratio (confounded). Use as an exploratory estimate only."
+    },
+    "mode": "hotspot_only",
+    "model": {
+      "name": "seasonal_ratio",
+      "label": "Paired conditional rate-ratio model (seasonal + land cover)",
+      "harmonic_order": 2,
+      "landcover_classes": [],
+      "coefficients": [
+        {
+          "term": "intercept (log ratio)",
+          "estimate": 1.8717418172974332,
+          "se_quasi": 0.015526168345499953
+        },
+        {
+          "term": "sin 1/yr",
+          "estimate": -0.02729491547820458,
+          "se_quasi": 0.02396229377965143
+        },
+        {
+          "term": "cos 1/yr",
+          "estimate": -0.34986070650812845,
+          "se_quasi": 0.019475956758108114
+        },
+        {
+          "term": "sin 2/yr",
+          "estimate": 0.12362506402622335,
+          "se_quasi": 0.018158680264518653
+        },
+        {
+          "term": "cos 2/yr",
+          "estimate": -0.1467487029516779,
+          "se_quasi": 0.019338684636817163
+        }
+      ],
+      "ratio_curve": [
+        {
+          "lc_class": "all",
+          "doy": [
+            1.0,
+            8.0,
+            15.0,
+            22.0,
+            29.0,
+            36.0,
+            43.0,
+            50.0,
+            57.0,
+            64.0,
+            71.0,
+            78.0,
+            85.0,
+            92.0,
+            99.0,
+            106.0,
+            113.0,
+            120.0,
+            127.0,
+            134.0,
+            141.0,
+            148.0,
+            155.0,
+            162.0,
+            169.0,
+            176.0,
+            183.0,
+            190.0,
+            197.0,
+            204.0,
+            211.0,
+            218.0,
+            225.0,
+            232.0,
+            239.0,
+            246.0,
+            253.0,
+            260.0,
+            267.0,
+            274.0,
+            281.0,
+            288.0,
+            295.0,
+            302.0,
+            309.0,
+            316.0,
+            323.0,
+            330.0,
+            337.0,
+            344.0,
+            351.0,
+            358.0,
+            365.0
+          ],
+          "ratio": [
+            3.971143004131002,
+            4.111622546081652,
+            4.305387313705973,
+            4.548341204769303,
+            4.834464253022621,
+            5.155238912962135,
+            5.499345256224052,
+            5.852804132708838,
+            6.1996963247672,
+            6.523470465190225,
+            6.808691899588002,
+            7.0429283617105325,
+            7.218380481982551,
+            7.332893468496857,
+            7.39013297536935,
+            7.398922981838976,
+            7.371946449563834,
+            7.324130097883605,
+            7.271043407035314,
+            7.227557027249237,
+            7.206874924222667,
+            7.219928382195921,
+            7.275032077908619,
+            7.377664362422378,
+            7.530241177121898,
+            7.731795044563016,
+            7.977537456212796,
+            8.258366874315413,
+            8.56047565009609,
+            8.865289396866922,
+            9.150011681175394,
+            9.389007439098535,
+            9.556110685013415,
+            9.627689727804688,
+            9.586004906480401,
+            9.42216058764513,
+            9.1379076854013,
+            8.745763450644489,
+            8.267340300387856,
+            7.7302646314765235,
+            7.164428831309592,
+            6.598421580281446,
+            6.056812096666236,
+            5.558626752939766,
+            5.1170016092461585,
+            4.739741013710442,
+            4.43040684295948,
+            4.189584005671208,
+            4.016060122938086,
+            3.9077656753876635,
+            3.862409865065177,
+            3.8778042571230786,
+            3.9518947344877744
+          ],
+          "lo": [
+            3.6636871871797148,
+            3.785468418306638,
+            3.9380008142440457,
+            4.166330250001621,
+            4.4663956575332096,
+            4.7668599020411655,
+            5.00005798579057,
+            5.307943375561756,
+            5.594983569905595,
+            5.871745320841655,
+            6.1367651800455105,
+            6.3247512344894465,
+            6.469487738936874,
+            6.49883343536409,
+            6.593253904458274,
+            6.573339638364699,
+            6.542149497260424,
+            6.482179160516499,
+            6.441499229938382,
+            6.478597462547211,
+            6.501901573003669,
+            6.566841563293897,
+            6.675869461209029,
+            6.8513100112186995,
+            7.0510959350755735,
+            7.2150627185034875,
+            7.438165982663929,
+            7.69859069865705,
+            8.00702242229373,
+            8.229044417887737,
+            8.434362248232494,
+            8.673581568834484,
+            8.787044966302162,
+            8.821163639706322,
+            8.808209711842641,
+            8.70258722895344,
+            8.494932589542215,
+            8.185378822501661,
+            7.810454051391733,
+            7.338303728667579,
+            6.808843319082292,
+            6.2965723702824254,
+            5.766935307835066,
+            5.282194303135655,
+            4.838903967882524,
+            4.470390585762801,
+            4.155851396369838,
+            3.897204544072932,
+            3.7265788900210732,
+            3.6273426258293537,
+            3.564062042724038,
+            3.577976025219303,
+            3.649471337332443
+          ],
+          "hi": [
+            4.372173877891134,
+            4.55876552560503,
+            4.783972109512942,
+            5.0522938609568655,
+            5.393002529964929,
+            5.760783710448816,
+            6.17504322136978,
+            6.527143929879949,
+            6.875746634085628,
+            7.261288931980904,
+            7.603175170892843,
+            7.867788244606801,
+            8.049442208047255,
+            8.194691831058828,
+            8.238865472207472,
+            8.275625235362888,
+            8.301902623139203,
+            8.233726664945888,
+            8.162013902425103,
+            8.0342857069468,
+            7.913937501089266,
+            7.8579416501998525,
+            7.8561909792147055,
+            7.906502513322164,
+            8.006142335429807,
+            8.212175206569638,
+            8.544053119565104,
+            8.899244319661875,
+            9.312462999429336,
+            9.712784803165912,
+            10.049260323497217,
+            10.409281890721333,
+            10.612421198522126,
+            10.706656213583422,
+            10.568411343119958,
+            10.274984772029224,
+            9.89414596039486,
+            9.366427864346788,
+            8.793333149638897,
+            8.158746569442108,
+            7.553271294034061,
+            6.927264046694253,
+            6.363443149539086,
+            5.861597738846339,
+            5.449417854943444,
+            5.063050763593151,
+            4.737639083318289,
+            4.49195381099731,
+            4.325899839342781,
+            4.214548810294679,
+            4.175134312122729,
+            4.230944678914547,
+            4.344057640129375
+          ]
+        }
+      ],
+      "dispersion_cell_week": 1.1764566080802674,
+      "dispersion_window": 6.668157362862859,
+      "bootstrap_reps_effective": 200,
+      "interval": 0.9
+    },
+    "diagnostics": {
+      "dispersion_cell_week": 1.1764566080802674,
+      "dispersion_window": 6.668157362862859,
+      "harmonic_order": 2,
+      "order_selection_deviance": {
+        "0": 67283.12831675197,
+        "1": 66693.58934944059,
+        "2": 66600.40893005265
+      },
+      "proportionality": {
+        "coef_log_activity": -0.07613567427166516,
+        "se": 0.007864740421487656,
+        "flag": true,
+        "meaning": "Change in log(source/reference ratio) per unit log(paired detections). Non-zero means the ratio depends on fire size/activity, so a constant-ratio conversion is biased at extremes."
+      },
+      "drift": {
+        "log_ratio_per_year": 0.11319722249948945,
+        "se": 0.013407854241249718,
+        "flag": true,
+        "meaning": "Trend of the log ratio across the overlap. A significant trend means transferring the calibration outside the overlap period is unsafe."
+      },
+      "per_year_intercept": [
+        {
+          "year": 2018,
+          "log_ratio_intercept": 1.7547688207501086,
+          "se": 0.019637771850739994,
+          "paired_detections": 26195
+        },
+        {
+          "year": 2019,
+          "log_ratio_intercept": 1.8573151820246179,
+          "se": 0.0185373059430027,
+          "paired_detections": 29773
+        },
+        {
+          "year": 2020,
+          "log_ratio_intercept": 1.9822292937250776,
+          "se": 0.018985223491730662,
+          "paired_detections": 32631
+        }
+      ],
+      "zero_check": {
+        "note": "Not assessable: without valid-observation coverage, zero cell-weeks cannot be distinguished from unobserved ones."
+      }
+    },
+    "warnings": [
+      "Significant drift of the sensor ratio across the overlap: transfer outside the overlap is unreliable.",
+      "The sensor ratio depends on activity level: constant-ratio conversion may be biased for very large or very small events.",
+      "No valid-observation coverage: coverage differences between platforms are absorbed into the ratio, and zero weeks cannot be distinguished from unobserved weeks."
+    ],
+    "target": "Aqua-equivalent quality-filtered detections per week (coverage assumed comparable between platforms)",
+    "evaluation_summary": {
+      "gates": {
+        "checks": [
+          {
+            "check": "temporal: beats raw_substitution on held-out AOI-week deviance",
+            "passed": true,
+            "detail": "9.61 vs 585"
+          },
+          {
+            "check": "temporal: beats global_ratio on held-out AOI-week deviance",
+            "passed": true,
+            "detail": "9.61 vs 14.4"
+          },
+          {
+            "check": "temporal: 90% predictive interval coverage within [0.8, 0.97]",
+            "passed": true,
+            "detail": "0.897"
+          },
+          {
+            "check": "spatial: beats raw_substitution on held-out AOI-week deviance",
+            "passed": true,
+            "detail": "4.07 vs 148"
+          },
+          {
+            "check": "spatial: beats global_ratio on held-out AOI-week deviance",
+            "passed": true,
+            "detail": "4.07 vs 5.22"
+          },
+          {
+            "check": "spatial: 90% predictive interval coverage within [0.8, 0.97]",
+            "passed": true,
+            "detail": "0.934"
+          }
+        ],
+        "passed": true
+      },
+      "schemes": {
+        "temporal": {
+          "interval_coverage": 0.8974358974358975,
+          "methods": {
+            "raw_substitution": {
+              "aoi_week": {
+                "n": 156,
+                "mae": 424.4423076923077,
+                "rmse": 596.3807239915774,
+                "mean_poisson_deviance": 585.3054038876763,
+                "bias": 424.4423076923077,
+                "relative_bias": 5.915572232645403,
+                "median_abs_log_ratio": 1.956186472096217
+              },
+              "cell_week": {
+                "n": 655200,
+                "mae": 0.10817002442002442,
+                "rmse": 1.4867500880026288,
+                "mean_poisson_deviance": 0.2893965250153774,
+                "bias": 0.1010576923076923,
+                "relative_bias": 5.915572232645403,
+                "median_abs_log_ratio": 0.0
+              },
+              "label": "Raw substitution (source detections treated as reference detections)",
+              "kind": "baseline"
+            },
+            "global_ratio": {
+              "aoi_week": {
+                "n": 156,
+                "mae": 23.991817700053527,
+                "rmse": 42.06710639244238,
+                "mean_poisson_deviance": 14.381923416712064,
+                "bias": 0.3618380612873503,
+                "relative_bias": 0.005043039181705231,
+                "median_abs_log_ratio": 0.305400438618011
+              },
+              "cell_week": {
+                "n": 655200,
+                "mae": 0.02016360134610383,
+                "rmse": 0.1998712732678618,
+                "mean_poisson_deviance": 0.14169751183636817,
+                "bias": 8.615191935413085e-05,
+                "relative_bias": 0.00504303918170522,
+                "median_abs_log_ratio": 0.0
+              },
+              "label": "Single global ratio (train totals)",
+              "kind": "baseline"
+            },
+            "seasonal_ratio": {
+              "aoi_week": {
+                "n": 156,
+                "mae": 19.72371683881608,
+                "rmse": 31.551380782059347,
+                "mean_poisson_deviance": 9.606763535042345,
+                "bias": 0.9859404034904392,
+                "relative_bias": 0.013741329665371975,
+                "median_abs_log_ratio": 0.2981557565860052
+              },
+              "cell_week": {
+                "n": 655200,
+                "mae": 0.01979027503958565,
+                "rmse": 0.19584595343181635,
+                "mean_poisson_deviance": 0.1408636275494164,
+                "bias": 0.00023474771511677073,
+                "relative_bias": 0.013741329665371945,
+                "median_abs_log_ratio": 0.0
+              },
+              "label": "Paired conditional rate-ratio model (seasonal + land cover)",
+              "kind": "candidate"
+            },
+            "nb_regression": {
+              "aoi_week": {
+                "n": 156,
+                "mae": 860.8975994175937,
+                "rmse": 3041.7984559459132,
+                "mean_poisson_deviance": 1487.873942895494,
+                "bias": 856.7481782765911,
+                "relative_bias": 11.940741160649354,
+                "median_abs_log_ratio": 0.9834720061259232
+              },
+              "cell_week": {
+                "n": 655200,
+                "mae": 0.22068394993002965,
+                "rmse": 33.529047358732115,
+                "mean_poisson_deviance": 0.5153000659959805,
+                "bias": 0.2039876614944265,
+                "relative_bias": 11.940741160649354,
+                "median_abs_log_ratio": 0.0037679337328561085
+              },
+              "label": "Negative-binomial regression calibration",
+              "kind": "candidate"
+            }
+          }
+        },
+        "spatial": {
+          "interval_coverage": 0.9342948717948718,
+          "methods": {
+            "raw_substitution": {
+              "aoi_week": {
+                "n": 624,
+                "mae": 106.1298076923077,
+                "rmse": 165.32754493847847,
+                "mean_poisson_deviance": 148.054106159919,
+                "bias": 106.11057692307692,
+                "relative_bias": 5.915572232645403,
+                "median_abs_log_ratio": 1.8437982901505237
+              },
+              "cell_week": {
+                "n": 655200,
+                "mae": 0.10817002442002442,
+                "rmse": 1.4867500880026288,
+                "mean_poisson_deviance": 0.2893965250153774,
+                "bias": 0.1010576923076923,
+                "relative_bias": 5.915572232645403,
+                "median_abs_log_ratio": 0.0
+              },
+              "label": "Raw substitution (source detections treated as reference detections)",
+              "kind": "baseline"
+            },
+            "global_ratio": {
+              "aoi_week": {
+                "n": 624,
+                "mae": 7.300170828819764,
+                "rmse": 12.737230370855318,
+                "mean_poisson_deviance": 5.222492163311851,
+                "bias": 0.38991594617794106,
+                "relative_bias": 0.021737474351383474,
+                "median_abs_log_ratio": 0.408611759758222
+              },
+              "cell_week": {
+                "n": 655200,
+                "mae": 0.020238696948072402,
+                "rmse": 0.1984508053424838,
+                "mean_poisson_deviance": 0.14172610031538813,
+                "bias": 0.00037134852016946764,
+                "relative_bias": 0.02173747435138347,
+                "median_abs_log_ratio": 0.0
+              },
+              "label": "Single global ratio (train totals)",
+              "kind": "baseline"
+            },
+            "seasonal_ratio": {
+              "aoi_week": {
+                "n": 624,
+                "mae": 6.244296492083475,
+                "rmse": 10.731186747036768,
+                "mean_poisson_deviance": 4.066457686276942,
+                "bias": 0.022289570025974897,
+                "relative_bias": 0.0012426241129463358,
+                "median_abs_log_ratio": 0.3532950413671324
+              },
+              "cell_week": {
+                "n": 655200,
+                "mae": 0.01981552826872708,
+                "rmse": 0.19748247157316495,
+                "mean_poisson_deviance": 0.14086230051734913,
+                "bias": 2.1228161929499687e-05,
+                "relative_bias": 0.001242624112946323,
+                "median_abs_log_ratio": 0.0
+              },
+              "label": "Paired conditional rate-ratio model (seasonal + land cover)",
+              "kind": "candidate"
+            },
+            "nb_regression": {
+              "aoi_week": {
+                "n": 624,
+                "mae": 359.0885280767888,
+                "rmse": 3411.3393800805616,
+                "mean_poisson_deviance": 662.8548549926556,
+                "bias": 357.1287491700948,
+                "relative_bias": 19.909616678472183,
+                "median_abs_log_ratio": 0.7836429283141702
+              },
+              "cell_week": {
+                "n": 655200,
+                "mae": 0.35664380874083246,
+                "rmse": 76.10712367500243,
+                "mean_poisson_deviance": 0.7846197285746933,
+                "bias": 0.34012261825723317,
+                "relative_bias": 19.909616678472187,
+                "median_abs_log_ratio": 0.003889470151162154
+              },
+              "label": "Negative-binomial regression calibration",
+              "kind": "candidate"
+            }
+          }
+        }
+      }
+    },
+    "provenance": {
+      "app_version": "0.1.0",
+      "method_version": "ember-method-1.0.0",
+      "method_fingerprint": "19f09ad1134cfb29",
+      "data_origin": "real",
+      "data_version": "b2-2-c0-0",
+      "synthetic": false,
+      "generated_at": "2026-11-14T19:06:04Z",
+      "store": "sqlite",
+      "batches": [
+        {
+          "id": 1,
+          "file_name": "MODIS_2018_2020.csv",
+          "file_sha256": "f6ec16c9372c5810f1a3e3bb8d9cbbd042bd8860bf344acda895c2c6efbed9b8",
+          "declared_source": "MODIS_SP",
+          "source_url": null,
+          "retrieved_at": null,
+          "imported_at": "2026-11-14T16:46:26Z",
+          "parser_version": "firms-csv-1.0.0",
+          "status": "complete"
+        },
+        {
+          "id": 2,
+          "file_name": "VIIRS_2018_2020_fixed.csv",
+          "file_sha256": "219f4acc366face77166c9111e5f459b69a7fc9cf21aa0c2afd81b274db16fb9",
+          "declared_source": "VIIRS_SNPP_SP",
+          "source_url": null,
+          "retrieved_at": null,
+          "imported_at": "2026-11-14T16:46:52Z",
+          "parser_version": "firms-csv-1.0.0",
+          "status": "complete"
+        }
+      ],
+      "selection": {
+        "origin": "real",
+        "aoi": {
+          "type": "MultiPolygon",
+          "coordinates": [
+            [
+              [
+                [
+                  25.5,
+                  35.5
+                ],
+                [
+                  45.0,
+                  35.5
+                ],
+                [
+                  45.0,
+                  42.5
+                ],
+                [
+                  25.5,
+                  42.5
+                ],
+                [
+                  25.5,
+                  35.5
+                ]
+              ]
+            ]
+          ]
+        },
+        "dates": [
+          "2018-01-01",
+          "2020-12-31"
+        ],
+        "platforms": [
+          "Aqua",
+          "Suomi-NPP"
+        ],
+        "streams": [
+          "SP"
+        ],
+        "grid_km": 18,
+        "window": "week",
+        "aoi_label": "Pilot: T\u00fcrkiye",
+        "aoi_area_km2": 1311874.2,
+        "quality": {
+          "min_confidence": "nominal",
+          "exclude_fire_types": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      "reference": "Aqua",
+      "source": "Suomi-NPP"
+    }
+  }
+}

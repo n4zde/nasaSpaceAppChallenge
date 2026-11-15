@@ -55,7 +55,14 @@ export function statusFill(c: CalCell, max: number): string {
   }
 }
 
-export function Calendar({ cells, years, window, selected, onSelect, signals, unit }: Props) {
+export function Calendar({ cells: allCells, years: allYears, window, selected, onSelect, signals, unit }: Props) {
+  // Show only years that have at least one imported cell; fall back to all years if none do.
+  const years = useMemo(() => {
+        const real = ["detections", "observed_none", "partially_observed_none", "unobserved", "none_reported_coverage_unknown"];
+    const withData = allYears.filter((yr) => allCells.some((c) => c.year === yr && real.includes(c.status)));
+    return withData.length ? withData : allYears;
+  }, [allCells, allYears]);
+  const cells = useMemo(() => allCells.filter((c) => years.includes(c.year)), [allCells, years]);
   const [wrapRef, width] = useWidth<HTMLDivElement>(900);
   const [hover, setHover] = useState<{ c: CalCell; x: number; y: number } | null>(null);
   const live = useRef<HTMLDivElement>(null);

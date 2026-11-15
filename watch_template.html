@@ -1,0 +1,80 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Ember Watch</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f7f4;--fg:#1b1f1a;--card:#fff;--mut:#566052;--bd:#d0d5cb;--l0:#2e7d32;--l1:#f2c744;--l2:#e8730c;--l3:#c62828;--ac:#0b5cad}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12150f;--fg:#eef1ea;--card:#1b2018;--mut:#a3ab9f;--bd:#333a2f;--l0:#43a047;--l2:#f08a2c;--l3:#e53935;--ac:#6cb2ff}}
+:root[data-theme="dark"]{--bg:#12150f;--fg:#eef1ea;--card:#1b2018;--mut:#a3ab9f;--bd:#333a2f;--l0:#43a047;--l2:#f08a2c;--l3:#e53935;--ac:#6cb2ff}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,"Segoe UI",Arial,sans-serif}
+.w{max-width:960px;margin:auto;padding:12px}h1{font-size:1.5rem;margin:.2em 0}h1 small{color:var(--mut);font-weight:400;font-size:1rem}
+h2{font-size:1.05rem;margin:1.2em 0 .4em}.n{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--l1);padding:8px 12px;border-radius:6px;font-size:.9rem;color:var(--mut)}
+.r{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:12px 0}
+.r button{min-height:48px;border:2px solid var(--bd);background:var(--card);color:var(--fg);border-radius:10px;font:inherit;font-weight:600;cursor:pointer}
+.r button[aria-pressed=true]{border-color:var(--ac);background:var(--ac);color:#fff}
+.c{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px}
+label{display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:.9rem}select,input{font:inherit;min-height:44px;padding:4px 8px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--fg)}input[type=range]{padding:0}
+.b{display:flex;gap:14px;align-items:center;padding:16px;border-radius:12px;margin:12px 0}.ic{font-size:2rem;min-width:3.2rem;text-align:center}.lv{font-size:1.6rem;font-weight:800}
+ul{margin:8px 0;padding-left:20px}.s{display:flex;gap:2px;height:90px;align-items:flex-end}.s button{flex:1;min-width:0;border:0;padding:0;background:none;height:100%;display:flex;align-items:flex-end;cursor:pointer}
+.s i{display:block;width:100%;background:var(--c);border-radius:2px 2px 0 0}.s button[aria-current=true]{outline:3px solid var(--fg);outline-offset:1px}
+[hidden]{display:none!important}.t{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:420px}th,td{text-align:left;padding:8px;border-bottom:1px solid var(--bd)}.pl{font-size:.8rem;color:var(--mut)}.m{color:var(--mut);font-size:.9rem}
+</style></head><body><div class="w">
+<h1>🔥 Ember Watch <small>Türkiye pilot</small></h1>
+<p class="n"><b>Alerts from historical patterns, not a fire-risk forecast.</b> Each week is compared with the same season in other years. 2018–2020 were the setup years; 2024–2025 are the operational years being checked (2021–2023 not imported). No observation-coverage data, so this is a research estimate.</p>
+<div class="r" id="R" role="group" aria-label="Choose your role"></div>
+<div class="c">
+<label>Area<select id="Z"></select></label>
+<label>Week of year: <output id="WO"></output><input type="range" id="W" min="0" max="51"></label>
+<label>View<select id="Y"></select></label>
+<label id="LV" hidden>Detections this week<input type="number" id="V" min="0" value="0"></label>
+</div>
+<section class="b" id="B" aria-live="polite"></section>
+<ul id="A"></ul>
+<h2>Season at a glance <span class="pl" id="ZN"></span></h2>
+<div class="s" id="S" role="group" aria-label="52 weeks, choose one"></div>
+<p class="pl">Bar height is typical weekly detections. Colour: grey quiet, blue building, orange active, red peak.</p>
+<p id="PL"></p>
+<h2>All areas this week</h2><div class="t"><table><thead><tr><th>Area</th><th>This week</th><th>Typical</th><th>Level</th></tr></thead><tbody id="T"></tbody></table></div>
+<h2>Alert log: strongest alerts in the operational years</h2><p class="pl" id="ALN"></p><div class="t"><table><thead><tr><th>Year</th><th>Week</th><th>Area</th><th>Level</th><th>Count vs typical</th><th>Suggested action</th></tr></thead><tbody id="AL"></tbody></table></div>
+<section id="SC" hidden><h2>Method (scientist view)</h2><p class="m" id="SM"></p></section>
+<p class="pl">Areas are approximate coordinate boxes and may include neighbouring territory. Counts are Suomi-NPP VIIRS 375 m vegetation-fire detections (nominal/high confidence) from NASA FIRMS. Replay uses only the other years as baseline. Live mode: type this week’s count for the chosen area.</p><p class="pl" id="FT"></p>
+</div><script>
+const D=__DATA__,MIN=10,N=['Normal','Watch','Alert','Critical'],IC=['✓','!','!!','!!!'],SN=['Quiet','Building','Active','Peak'],SC=['#9aa39a','#6aa9d8','#e8930c','#c62828'];
+const RL={resp:'Emergency responder',fire:'Firefighter',land:'Land manager',sci:'Scientist'};
+const A={resp:['Routine monitoring.','Check each new satellite pass and confirm mutual-aid contacts.','Pre-position resources and brief duty officers.','Activate surge plans and warn neighbouring districts.'],
+fire:['Normal readiness.','Check crew rosters and equipment.','Expect several simultaneous incidents; stage crews.','Expect a high incident load; review shift cover under local protocol.'],
+land:['No change to burning plans.','Review local burn rules before any burning.','Defer planned burns and alert local farmers.','Suspend planned burns and coordinate with authorities.'],
+sci:['Within the baseline range.','Above the median; the baseline sample is small.','Above 80% of baseline weeks.','Exceeds every baseline week; check observation coverage before concluding.']};
+const $=i=>document.getElementById(i);let role='resp',z=0,wk=35;
+const wl=w=>new Date(2019,0,1+7*w).toLocaleDateString('en',{month:'short',day:'numeric'});
+const pool=(zi,w,ex)=>{const a=[];D.y.forEach((y,i)=>{if(y===ex)return;for(let k=-2;k<=2;k++){const j=w+k;if(j>=0&&j<52)a.push(D.d[zi][i][j])}});return a.sort((a,b)=>a-b)};
+const med=a=>a.length?(a[(a.length-1)>>1]+a[a.length>>1])/2:0;
+const lvl=(v,a)=>{if(v<MIN||v<=med(a))return 0;if(v>a[a.length-1])return 3;return a.filter(x=>x<=v).length/a.length>=.8?2:1};
+const mean=(zi,w)=>D.d[zi].reduce((s,r)=>s+r[w],0)/D.y.length;
+D.z.forEach((n,i)=>$('Z').add(new Option(n,i)));D.y.forEach(y=>$('Y').add(new Option((D.op.includes(y)?'Operational ':'Setup ')+y,y)));$('Y').add(new Option('Live: enter this week’s count','live'));$('Y').value=D.y[D.y.length-1];$('W').value=wk;
+Object.keys(RL).forEach(k=>{const b=document.createElement('button');b.textContent=RL[k];b.onclick=()=>{role=k;R()};b.dataset.k=k;$('R').appendChild(b)});
+function R(){
+ const y=$('Y').value,live=y==='live',yi=D.y.indexOf(+y),ex=live?0:+y;wk=+$('W').value;z=+$('Z').value;$('LV').hidden=!live;
+ const v=live?(+$('V').value||0):D.d[z][yi][wk],p=pool(z,wk,ex),L=lvl(v,p),B=$('B');
+ [...$('R').children].forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===role));
+ $('WO').textContent=(wk+1)+' (from '+wl(wk)+')';
+ B.style.background='var(--l'+L+')';B.style.color=L==1?'#1b1f1a':'#fff';
+ B.innerHTML='<div class="ic">'+IC[L]+'</div><div><div class="lv">'+N[L]+'</div><div>'+D.z[z]+', week '+(wk+1)+': <b>'+v+'</b> detections vs typical '+med(p)+' (range '+p[0]+'–'+p[p.length-1]+').'+(v<MIN?' Too few detections to flag.':'')+'</div></div>';
+ $('A').innerHTML='<li><b>'+RL[role]+':</b> '+A[role][L]+'</li>';
+ const m=D.y.map((_,i)=>0).length&&[...Array(52).keys()].map(w=>mean(z,w)),mx=Math.max(...m,1);
+ $('S').innerHTML='';$('ZN').textContent='— '+D.z[z];
+ m.forEach((x,w)=>{const c=x/mx>=.7?3:x/mx>=.35?2:x/mx>=.1?1:0,b=document.createElement('button'),i=document.createElement('i');
+  i.style.height=Math.max(4,x/mx*100)+'%';i.style.setProperty('--c',SC[c]);b.appendChild(i);
+  b.setAttribute('aria-label','Week '+(w+1)+', '+wl(w)+': '+SN[c]);b.title='Week '+(w+1)+' '+wl(w)+': '+SN[c];
+  if(w===wk)b.setAttribute('aria-current','true');b.onclick=()=>{$('W').value=w;R()};$('S').appendChild(b)});
+ const top=m.map((x,w)=>[x,w]).sort((a,b)=>b[0]-a[0]).slice(0,3).map(a=>a[1]).sort((a,b)=>a-b);
+ $('PL').innerHTML='<b>Plan around:</b> '+top.map(w=>'week '+(w+1)+' ('+wl(w)+')').join(', ')+' are typically the busiest.<br><b>Next 4 weeks, typical:</b> '+[1,2,3,4].map(k=>{const w=(wk+k)%52,x=m[w]/mx;return 'wk '+(w+1)+' '+SN[x>=.7?3:x>=.35?2:x>=.1?1:0]+' (~'+Math.round(m[w])+')'}).join('; ')+'.';
+ const rows=D.z.map((n,i)=>{const pp=pool(i,wk,ex),vv=live?(i===z?v:null):D.d[i][yi][wk];return{n,vv,md:med(pp),L:vv===null?-1:lvl(vv,pp)}}).sort((a,b)=>b.L-a.L);
+ $('T').innerHTML=rows.map(r=>'<tr><td>'+r.n+'</td><td>'+(r.vv===null?'—':r.vv)+'</td><td>'+r.md+'</td><td>'+(r.L<0?'—':IC[r.L]+' '+N[r.L])+'</td></tr>').join('');
+ $('AL').innerHTML=ALS.slice(0,25).map(a=>'<tr><td>'+a[0]+'</td><td>wk '+(a[1]+1)+' ('+wl(a[1])+')</td><td>'+D.z[a[2]]+'</td><td>'+IC[a[3]]+' '+N[a[3]]+'</td><td>'+a[4]+' vs '+a[5]+'</td><td>'+A[role][a[3]]+'</td></tr>').join('');$('ALN').textContent=ALS.length+' Alert or Critical weeks across '+D.op.join(' and ')+', each judged against all other years. Showing the strongest 25.';
+ $('SC').hidden=role!=='sci';
+ $('SM').textContent='Baseline: '+p.length+' weekly counts (same week ±2 weeks, '+(live?'all '+D.y.length+' years':'the other '+(D.y.length-1)+' years')+'). Watch: above median; Alert: at or above the 80th percentile of the baseline; Critical: above every baseline week; minimum '+MIN+' detections. Aqua-scale estimate of this count: about '+Math.round(v*0.137)+' (exploratory ratio 0.137, 95% CI 0.118–0.159). Three years is a small baseline; thresholds are provisional.';
+}
+const ALS=[];D.op.forEach(y=>{const yi=D.y.indexOf(y);D.z.forEach((n,i)=>{for(let w=0;w<52;w++){const p=pool(i,w,y),v=D.d[i][yi][w],l=lvl(v,p);if(l>=2)ALS.push([y,w,i,l,v,med(p)])}})});ALS.sort((a,b)=>b[3]-a[3]||b[4]-a[4]);
+$('FT').textContent='Yearly totals, all areas: '+D.y.map(y=>y+': '+D.tot[y].toLocaleString('en')).join(', ')+'. Large jumps between years can come from the sensor or the import, not only from fire.';
+['Z','W','Y','V'].forEach(i=>$(i).oninput=R);R();
+</script></body></html>

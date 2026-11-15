@@ -38,7 +38,7 @@ window = "week"
 harmonic_orders = [0, 1, 2]            # seasonal Fourier order, selected by train-only blocked CV
 min_paired_units = 150                 # cell-weeks with >= 1 detection from either platform
 min_detections_per_platform = 500
-min_years = 3
+min_years = 2
 min_spatial_blocks = 4
 bootstrap_replicates = 200
 bootstrap_block_weeks = 4

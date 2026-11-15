@@ -1,22 +1,33 @@
-"""Preset areas of interest. Coordinates are WGS84 lon/lat."""
-
-PILOT_BBOX = (-48.5, -11.5, -45.5, -9.0)
+# Approximate bounding box covering the Türkiye detections in the 2018-2020 datasets.
+PILOT_BBOX = (25.5, 35.5, 45.0, 42.5)
 
 PRESETS = [
     {
-        "id": "pilot-cerrado",
-        "name": "Pilot: eastern Tocantins (Cerrado), Brazil",
-        "description": "Pilot region: frequent dry-season burning, long MODIS/VIIRS overlap, low latitude (MODIS swath gaps). The synthetic demo world is placed here; real data must be imported separately.",
-        "geometry": {"type": "Polygon", "coordinates": [[[-48.5, -11.5], [-45.5, -11.5], [-45.5, -9.0], [-48.5, -9.0], [-48.5, -11.5]]]},
+        "id": "pilot-turkiye",
+        "name": "Pilot: Türkiye",
+        "description": "Türkiye-wide pilot study using real MODIS and Suomi-NPP VIIRS 375 m fire detections from 2018 to 2020. The rectangular study area approximates the geographic coverage of the imported datasets; it is not an exact national boundary.",
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [[
+                [25.5, 35.5], [45.0, 35.5],
+                [45.0, 42.5], [25.5, 42.5],
+                [25.5, 35.5]
+            ]]
+        },
         "pilot": True,
     },
     {
-        "id": "pilot-cerrado-irregular",
-        "name": "Pilot sub-area (irregular polygon)",
-        "description": "Non-rectangular polygon inside the pilot region, to demonstrate exact polygon filtering (not bounding-box filtering).",
+        "id": "pilot-turkiye-irregular",
+        "name": "Pilot sub-area: Central Türkiye",
+        "description": "Illustrative irregular sub-area in central Türkiye, used to demonstrate exact polygon filtering.",
         "geometry": {
             "type": "Polygon",
-            "coordinates": [[[-48.2, -11.2], [-46.9, -11.35], [-45.8, -10.6], [-46.1, -9.6], [-47.0, -9.25], [-47.6, -10.1], [-48.3, -10.2], [-48.2, -11.2]]],
+            "coordinates": [[
+                [32.0, 37.0], [34.5, 37.2],
+                [35.5, 38.5], [35.0, 39.8],
+                [33.5, 40.5], [31.8, 39.8],
+                [31.5, 38.5], [32.0, 37.0]
+            ]]
         },
         "pilot": True,
     },

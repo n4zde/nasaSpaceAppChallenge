@@ -24,7 +24,7 @@ from starlette.responses import FileResponse, JSONResponse, Response
 from starlette.staticfiles import StaticFiles
 
 from .. import __version__
-from ..config import get_settings
+from ..config import PROJECT_ROOT, get_settings
 from ..service import EmberService, ServiceError
 from ..store.factory import open_store
 
@@ -161,12 +161,26 @@ def create_app(svc: EmberService | None = None, frontend_dist: Path | None = Non
     dist = frontend_dist if frontend_dist is not None else settings.frontend_dist
     if dist and Path(dist).exists() and (Path(dist) / "index.html").exists():
         index = Path(dist) / "index.html"
+        watch = Path(dist) / "watch.html"
         app.mount("/assets", StaticFiles(directory=str(Path(dist) / "assets")), name="assets") if (Path(dist) / "assets").exists() else None
 
         async def spa(request: Request) -> Response:
             return FileResponse(index, headers={"Cache-Control": "no-store"})
 
+        if watch.exists():
+            async def watch_page(request: Request) -> Response:
+                return FileResponse(watch, headers={"Cache-Control": "no-store"})
+
+            app.add_route("/watch.html", watch_page, methods=["GET"])
         app.add_route("/", spa, methods=["GET"])
+
+    async def watch_page(request: Request) -> Response:
+        for base in (PROJECT_ROOT, Path(dist) if dist else None):
+            if base and (Path(base) / "watch.html").exists():
+                return FileResponse(Path(base) / "watch.html", headers={"Cache-Control": "no-store"})
+        return Response("watch.html not found. Run: python build_watch.py", status_code=404, media_type="text/plain")
+
+    app.add_route("/watch", watch_page, methods=["GET"])
     return app
 
 
