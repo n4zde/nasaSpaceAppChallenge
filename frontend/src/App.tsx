@@ -11,6 +11,7 @@ import { KeyFigures } from "./components/KeyFigures";
 import { MapView } from "./components/MapView";
 import { MethodView } from "./components/MethodView";
 import { METRICS, Rail, UiState } from "./components/Rail";
+import RailResizer from "./components/RailResizer";
 import { ValidationView } from "./components/ValidationView";
 import { api, SelectionReq } from "./lib/api";
 import { CalCell, harmonizedCells, rawCells, yearsBetween } from "./lib/calendar";
@@ -233,6 +234,7 @@ export function App() {
       <div className="layout">
         <Rail ui={ui} set={(p) => { set(p); if (p.aoi !== undefined || p.dataset) { setSelected(null); setPickedCell(null); } }} meta={meta} availablePlatforms={availablePlatforms}
           onStartDraw={() => setDrawing(true)} drawing={drawing} aoiError={aoiError} setAoiError={setAoiError} extent={extentOf(meta, ui.dataset)} />
+        <RailResizer />
         <main className="main" id="main">
           <GlobePanel
             aoi={summaryQ.data?.aoi.geometry || null}

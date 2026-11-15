@@ -36,11 +36,11 @@ export default function Globe({ lon = -47.25, lat = -10.25 }: Props) {
     let raf = 0;
 
     function draw(t: number) {
-      const r = (SIZE / 2) * 0.88 * zoom;
+      const r = (SIZE / 2) * 0.60 * zoom;
       proj.scale(r).rotate([rot[0], rot[1], 0]);
       ctx.clearRect(0, 0, SIZE, SIZE);
 
-      const glow = ctx.createRadialGradient(SIZE / 2, SIZE / 2, r * 0.95, SIZE / 2, SIZE / 2, r * 1.18);
+      const glow = ctx.createRadialGradient(SIZE / 2, SIZE / 2, r * 0.95, SIZE / 2, SIZE / 2, Math.min(r * 1.18, SIZE / 2));
       glow.addColorStop(0, "rgba(232,114,28,.35)");
       glow.addColorStop(1, "rgba(232,114,28,0)");
       ctx.fillStyle = glow;
