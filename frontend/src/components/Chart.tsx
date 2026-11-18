@@ -47,7 +47,9 @@ export function Chart({ series, xType = "time", yScale = "linear", height = 240,
   const xmin = xDomain ? xDomain[0] : Math.min(...xs);
   const xmax = xDomain ? xDomain[1] : Math.max(...xs);
   const ymax = Math.max(1, ...all.map((p) => Math.max(p.y ?? 0, p.hi ?? 0)));
-  const x = (xType === "time" ? scaleTime() : scaleLinear()).domain([xmin, xmax]).range([M.l, width - M.r]) as any;
+  const x: any = xType === "time"
+    ? scaleTime().domain([new Date(xmin), new Date(xmax)]).range([M.l, width - M.r])
+    : scaleLinear().domain([xmin, xmax]).range([M.l, width - M.r]);
   const y = (yScale === "symlog" ? scaleSymlog().constant(1) : scaleLinear()).domain([0, ymax * 1.05]).range([height - M.b, M.t]).nice();
   const xticks: number[] = x.ticks(Math.max(3, Math.floor(width / 110))).map((d: any) => +d);
   const yticks: number[] = yScale === "symlog" ? symlogTicks(ymax) : (y.ticks(5) as number[]);

@@ -122,27 +122,45 @@ def cmd_evaluate(a):
     from .service import EmberService
 
     svc = EmberService(_store())
+    date_scoped = bool(a.date_start or a.date_end)
+
     req = {
         "dataset": a.dataset,
         "aoi": _aoi_arg(a.aoi),
-        "date_start": "1900-01-01",
-        "date_end": "2100-01-01",
+        "date_start": a.date_start or "1900-01-01",
+        "date_end": a.date_end or "2100-01-01",
         "grid_km": a.grid_km,
         "reference": a.reference,
         "source": a.source,
         "bootstrap_reps": a.bootstrap,
         "streams": a.streams.split(",") if a.streams else None,
+        "evaluation_date_scoped": date_scoped,
     }
+
     t = time.time()
     ev = svc.run_evaluation(req)
-    h = svc.harmonized(req)
+
+    # Keep harmonisation on its original full-history calibration.
+    h = svc.harmonized({**req, "evaluation_date_scoped": False})
+
     paths = write_evaluation_artifacts(ev, h, Path(a.out))
     print(
         json.dumps(
-            {"status": h["status"], "gates_passed": ev["gates"]["passed"], "artifacts": [str(p) for p in paths], "seconds": round(time.time() - t, 1)}, indent=2
+            {
+                "status": h["status"],
+                "evaluation_date_scoped": date_scoped,
+                "evaluation_period": [
+                    req["date_start"],
+                    req["date_end"],
+                ] if date_scoped else "full history",
+                "diagnostic_only": ev.get("diagnostic_only", False),
+                "gates_passed": ev["gates"]["passed"],
+                "artifacts": [str(p) for p in paths],
+                "seconds": round(time.time() - t, 1),
+            },
+            indent=2,
         )
     )
-
 
 def cmd_recovery(a):
     from .science.experiments import synthetic_recovery
@@ -219,7 +237,9 @@ def main(argv=None):
 
     s = sub.add_parser("evaluate", help="blocked hold-out validation + harmonisation; writes evaluation artifacts and a model card")
     s.add_argument("--dataset", choices=["real", "synthetic"], default="synthetic")
-    s.add_argument("--aoi", default="pilot-cerrado")
+    s.add_argument("--aoi", default="pilot-turkiye")
+    s.add_argument("--date-start", help="evaluation start date (YYYY-MM-DD)")
+    s.add_argument("--date-end", help="evaluation end date (YYYY-MM-DD)")
     s.add_argument("--grid-km", type=int, default=18)
     s.add_argument("--reference", default="Aqua")
     s.add_argument("--source", default="Suomi-NPP")
@@ -237,7 +257,7 @@ def main(argv=None):
     s = sub.add_parser("sensitivity", help="sensitivity of calibration to grid size, window, quality filter and coverage assumptions")
     s.add_argument("--out", default=str(PROJECT_ROOT / "artifacts"))
     s.add_argument("--dataset", choices=["real", "synthetic"], default="synthetic")
-    s.add_argument("--aoi", default="pilot-cerrado")
+    s.add_argument("--aoi", default="pilot-turkiye")
     s.add_argument("--quick", action="store_true")
     s.set_defaults(fn=cmd_sensitivity)
 

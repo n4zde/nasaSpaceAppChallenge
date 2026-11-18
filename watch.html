@@ -1,0 +1,80 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Ember Watch</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f7f4;--fg:#1b1f1a;--card:#fff;--mut:#566052;--bd:#d0d5cb;--l0:#2e7d32;--l1:#f2c744;--l2:#e8730c;--l3:#c62828;--ac:#0b5cad}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12150f;--fg:#eef1ea;--card:#1b2018;--mut:#a3ab9f;--bd:#333a2f;--l0:#43a047;--l2:#f08a2c;--l3:#e53935;--ac:#6cb2ff}}
+:root[data-theme="dark"]{--bg:#12150f;--fg:#eef1ea;--card:#1b2018;--mut:#a3ab9f;--bd:#333a2f;--l0:#43a047;--l2:#f08a2c;--l3:#e53935;--ac:#6cb2ff}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,"Segoe UI",Arial,sans-serif}
+.w{max-width:960px;margin:auto;padding:12px}h1{font-size:1.5rem;margin:.2em 0}h1 small{color:var(--mut);font-weight:400;font-size:1rem}
+h2{font-size:1.05rem;margin:1.2em 0 .4em}.n{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--l1);padding:8px 12px;border-radius:6px;font-size:.9rem;color:var(--mut)}
+.r{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:12px 0}
+.r button{min-height:48px;border:2px solid var(--bd);background:var(--card);color:var(--fg);border-radius:10px;font:inherit;font-weight:600;cursor:pointer}
+.r button[aria-pressed=true]{border-color:var(--ac);background:var(--ac);color:#fff}
+.c{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px}
+label{display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:.9rem}select,input{font:inherit;min-height:44px;padding:4px 8px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--fg)}input[type=range]{padding:0}
+.b{display:flex;gap:14px;align-items:center;padding:16px;border-radius:12px;margin:12px 0}.ic{font-size:2rem;min-width:3.2rem;text-align:center}.lv{font-size:1.6rem;font-weight:800}
+ul{margin:8px 0;padding-left:20px}.s{display:flex;gap:2px;height:90px;align-items:flex-end}.s button{flex:1;min-width:0;border:0;padding:0;background:none;height:100%;display:flex;align-items:flex-end;cursor:pointer}
+.s i{display:block;width:100%;background:var(--c);border-radius:2px 2px 0 0}.s button[aria-current=true]{outline:3px solid var(--fg);outline-offset:1px}
+[hidden]{display:none!important}.t{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:420px}th,td{text-align:left;padding:8px;border-bottom:1px solid var(--bd)}.pl{font-size:.8rem;color:var(--mut)}.m{color:var(--mut);font-size:.9rem}
+</style></head><body><div class="w">
+<h1>🔥 Ember Watch <small>Türkiye pilot</small></h1>
+<p class="n"><b>Alerts from historical patterns, not a fire-risk forecast.</b> Each week is compared with the same season in other years. 2018–2020 were the setup years; 2024–2025 are the operational years being checked (2021–2023 not imported). No observation-coverage data, so this is a research estimate.</p>
+<div class="r" id="R" role="group" aria-label="Choose your role"></div>
+<div class="c">
+<label>Area<select id="Z"></select></label>
+<label>Week of year: <output id="WO"></output><input type="range" id="W" min="0" max="51"></label>
+<label>View<select id="Y"></select></label>
+<label id="LV" hidden>Detections this week<input type="number" id="V" min="0" value="0"></label>
+</div>
+<section class="b" id="B" aria-live="polite"></section>
+<ul id="A"></ul>
+<h2>Season at a glance <span class="pl" id="ZN"></span></h2>
+<div class="s" id="S" role="group" aria-label="52 weeks, choose one"></div>
+<p class="pl">Bar height is typical weekly detections. Colour: grey quiet, blue building, orange active, red peak.</p>
+<p id="PL"></p>
+<h2>All areas this week</h2><div class="t"><table><thead><tr><th>Area</th><th>This week</th><th>Typical</th><th>Level</th></tr></thead><tbody id="T"></tbody></table></div>
+<h2>Alert log: strongest alerts in the operational years</h2><p class="pl" id="ALN"></p><div class="t"><table><thead><tr><th>Year</th><th>Week</th><th>Area</th><th>Level</th><th>Count vs typical</th><th>Suggested action</th></tr></thead><tbody id="AL"></tbody></table></div>
+<section id="SC" hidden><h2>Method (scientist view)</h2><p class="m" id="SM"></p></section>
+<p class="pl">Areas are approximate coordinate boxes and may include neighbouring territory. Counts are Suomi-NPP VIIRS 375 m vegetation-fire detections (nominal/high confidence) from NASA FIRMS. Replay uses only the other years as baseline. Live mode: type this week’s count for the chosen area.</p><p class="pl" id="FT"></p>
+</div><script>
+const D={"z":["Marmara & NW","Aegean","Mediterranean","Black Sea","Central Anatolia","Southeast","East"],"y":[2018,2019,2020,2024,2025],"op":[2024,2025],"d":[[[1,0,2,1,5,3,0,1,0,3,4,3,1,4,16,9,7,5,4,4,1,6,12,14,5,6,23,12,16,15,9,32,30,25,38,35,23,117,84,98,111,136,199,189,32,15,3,1,1,0,0,2],[0,0,1,0,6,7,5,12,11,35,19,23,29,24,4,5,5,5,4,2,6,6,9,8,9,20,9,12,16,18,30,64,13,30,41,58,113,192,242,375,123,199,329,86,121,43,26,8,0,1,23,2],[4,11,9,27,2,7,16,13,31,8,26,24,2,4,31,7,23,12,7,4,4,7,12,14,11,10,19,22,16,29,17,40,23,26,28,77,93,116,125,234,119,130,261,52,43,36,28,47,12,4,1,15],[4,4,2,1,6,32,0,17,13,2,6,11,12,37,37,21,3,1,4,5,5,23,11,15,58,29,15,11,45,13,17,27,232,39,28,30,20,60,170,166,159,418,506,370,97,3,13,12,3,1,8,2],[3,4,3,10,8,16,10,5,12,108,59,31,6,3,9,23,14,21,2,9,14,20,25,35,51,418,20,133,520,173,32,175,335,45,38,29,43,124,50,63,14,44,74,24,25,17,54,28,2,4,6,4]],[[5,5,3,28,14,18,8,1,2,7,20,18,17,18,18,16,31,6,13,16,16,15,43,26,12,18,30,32,39,24,40,36,27,19,22,23,72,57,68,55,42,45,39,139,92,77,6,4,6,7,8,16],[1,4,7,2,15,18,21,28,34,57,33,77,37,14,3,27,11,19,16,16,15,37,48,25,30,79,37,81,33,42,38,65,459,71,38,56,43,68,38,43,27,63,116,75,70,39,48,2,11,11,17,2],[8,11,32,61,9,18,5,14,42,18,46,47,12,2,17,14,9,1,9,7,35,5,9,24,17,35,35,16,17,26,181,13,104,39,42,44,37,50,61,99,50,62,52,16,84,47,38,67,19,2,14,13],[4,3,2,14,29,79,9,30,24,13,17,28,16,25,25,15,8,13,14,8,18,18,64,81,142,55,45,6,133,15,66,92,729,51,31,61,26,26,48,83,55,177,178,157,75,14,8,19,2,10,6,2],[3,3,9,13,16,40,33,64,27,96,57,45,5,11,13,22,8,10,21,20,13,33,62,79,104,519,779,67,59,301,26,84,46,72,194,27,48,228,48,38,43,48,28,52,26,49,19,7,3,12,13,8]],[[1,2,4,1,4,21,5,11,8,21,23,13,15,22,10,13,5,66,3,38,268,119,78,66,111,125,101,86,132,67,92,451,1277,655,284,160,176,83,91,125,61,46,18,188,202,187,63,8,2,1,1,2],[0,1,0,3,3,11,3,66,5,59,4,40,4,1,6,6,18,3,22,20,17,105,86,51,36,104,43,45,31,85,29,49,40,139,946,698,329,271,191,116,133,77,56,57,110,78,53,21,7,41,61,0],[3,1,10,30,10,15,26,14,27,78,10,5,13,8,15,19,13,4,14,18,42,84,162,46,54,57,83,89,63,41,43,38,77,760,879,673,446,255,187,126,232,97,216,204,96,164,42,37,34,1,10,41],[8,1,3,4,12,12,4,25,38,13,25,6,18,22,11,21,4,11,13,22,119,48,84,76,55,49,124,24,31,10,43,60,146,242,180,153,82,40,69,65,87,160,186,105,49,31,1,21,11,27,9,1],[6,20,33,16,51,30,13,53,43,65,52,20,11,7,19,24,6,4,4,7,19,15,102,73,81,230,64,56,20,145,4,49,442,134,243,210,176,237,100,60,39,72,25,64,97,34,39,24,4,10,18,8]],[[4,0,3,0,9,5,0,5,1,3,11,11,14,43,33,9,15,15,0,10,4,1,13,8,11,19,16,22,20,33,24,30,38,73,54,42,24,46,67,49,20,54,2,43,27,3,3,1,1,3,2,0],[0,1,1,3,8,3,5,14,15,33,2,10,11,23,12,3,8,7,2,6,8,8,8,6,2,14,16,9,12,20,18,20,11,21,39,75,38,59,20,79,53,60,47,21,52,62,24,4,2,2,21,39],[1,0,2,4,0,0,5,4,18,74,46,17,7,0,27,9,22,4,5,13,7,8,9,5,6,16,19,19,10,18,35,47,37,25,43,203,49,29,78,37,69,105,62,61,12,14,20,25,17,6,2,26],[8,1,0,2,1,25,6,23,49,3,4,6,14,65,12,25,6,0,2,6,4,13,10,22,11,21,19,7,14,13,16,18,50,43,16,16,27,9,23,19,22,17,25,36,18,5,4,2,6,10,1,0],[5,6,1,2,6,1,1,0,22,131,77,11,8,5,2,15,4,7,2,3,9,7,12,10,12,13,3,33,25,434,6,27,16,10,229,14,21,23,43,85,29,34,4,30,52,9,26,21,3,0,2,0]],[[6,3,1,2,17,23,28,23,4,17,37,25,21,33,19,18,26,12,5,10,11,11,18,20,11,29,87,84,90,161,119,120,305,342,202,219,193,318,287,282,122,94,87,496,417,218,59,3,0,2,2,0],[0,0,1,1,20,24,15,90,7,107,12,81,14,11,8,14,10,10,2,6,3,6,12,7,11,36,37,56,95,144,126,179,90,80,172,155,124,196,169,208,187,168,225,169,350,154,113,31,15,61,125,0],[2,1,12,24,15,17,13,17,46,134,47,21,10,8,34,29,17,6,7,8,19,7,14,7,29,11,56,29,50,89,107,80,126,333,308,157,120,81,124,207,256,245,271,271,145,245,122,60,63,7,3,15],[23,1,7,4,10,73,8,75,133,22,25,29,41,119,37,89,30,3,10,15,7,8,9,14,31,42,51,24,66,69,226,246,370,252,202,211,359,136,188,276,266,260,384,403,154,98,15,1,3,19,7,2],[13,44,40,11,101,4,26,20,17,133,200,10,44,3,22,72,23,7,42,74,43,12,42,25,31,27,15,63,47,181,32,88,178,150,86,52,106,95,165,141,47,148,73,117,189,91,96,58,2,9,15,5]],[[30,341,81,2,27,41,1,0,0,18,7,11,6,13,4,3,2,4,1,6,24,21,120,401,804,337,280,310,254,248,166,163,188,213,365,269,346,510,526,492,148,216,8,239,38,170,54,6,0,0,51,1],[0,1,97,423,111,64,11,83,0,17,3,14,2,1,4,0,8,6,4,9,32,64,60,135,294,769,257,293,236,431,408,196,125,174,197,297,213,360,493,544,487,495,467,134,555,642,912,61,9,1,619,148],[0,32,58,105,3,0,0,8,52,39,2,5,2,1,10,2,0,0,5,28,20,40,109,400,1161,1222,546,305,351,308,392,252,237,264,235,351,294,454,469,517,672,598,724,526,123,400,347,79,384,279,70,783],[294,34,168,52,128,61,10,14,104,20,23,0,3,21,2,12,4,8,6,19,63,29,269,844,1227,1015,445,102,215,96,280,233,153,173,328,217,366,336,892,1348,956,722,990,992,447,473,190,89,271,445,336,76],[169,389,310,56,104,13,6,7,38,57,30,16,7,2,7,8,7,1,2,6,28,46,30,220,893,776,169,78,78,54,35,35,102,43,107,104,112,162,163,220,100,201,91,332,425,24,722,639,345,23,556,322]],[[0,3,0,1,4,8,4,2,1,1,8,2,4,11,5,13,3,1,0,4,2,1,1,5,6,12,13,8,11,32,24,53,210,62,87,101,53,79,71,68,20,36,1,34,9,7,0,0,0,0,1,0],[0,1,0,1,0,0,3,22,1,18,3,9,1,3,12,0,3,0,4,9,4,4,6,4,4,12,11,15,31,19,25,31,65,8,27,30,41,41,65,48,54,47,17,15,32,30,50,0,0,0,4,4],[0,0,6,12,1,6,0,1,5,32,3,14,4,0,7,4,3,1,3,5,5,5,4,4,6,10,9,5,15,7,21,28,17,24,95,40,50,17,19,25,63,26,34,23,3,9,1,5,1,0,0,1],[4,1,0,0,2,5,2,27,44,18,18,1,4,22,3,14,3,1,0,3,2,4,5,4,10,17,25,2,16,13,218,390,233,183,179,139,82,43,51,75,66,26,89,83,38,9,1,2,2,2,4,2],[2,2,9,8,20,5,1,0,7,61,78,5,6,2,2,11,5,2,2,5,7,5,11,10,10,18,6,15,10,30,16,33,33,64,57,32,24,36,79,80,74,31,17,36,32,2,12,13,1,2,6,0]]],"tot":{"2018":22725,"2019":25850,"2020":28831,"2024":32070,"2025":24415}},MIN=10,N=['Normal','Watch','Alert','Critical'],IC=['✓','!','!!','!!!'],SN=['Quiet','Building','Active','Peak'],SC=['#9aa39a','#6aa9d8','#e8930c','#c62828'];
+const RL={resp:'Emergency responder',fire:'Firefighter',land:'Land manager',sci:'Scientist'};
+const A={resp:['Routine monitoring.','Check each new satellite pass and confirm mutual-aid contacts.','Pre-position resources and brief duty officers.','Activate surge plans and warn neighbouring districts.'],
+fire:['Normal readiness.','Check crew rosters and equipment.','Expect several simultaneous incidents; stage crews.','Expect a high incident load; review shift cover under local protocol.'],
+land:['No change to burning plans.','Review local burn rules before any burning.','Defer planned burns and alert local farmers.','Suspend planned burns and coordinate with authorities.'],
+sci:['Within the baseline range.','Above the median; the baseline sample is small.','Above 80% of baseline weeks.','Exceeds every baseline week; check observation coverage before concluding.']};
+const $=i=>document.getElementById(i);let role='resp',z=0,wk=35;
+const wl=w=>new Date(2019,0,1+7*w).toLocaleDateString('en',{month:'short',day:'numeric'});
+const pool=(zi,w,ex)=>{const a=[];D.y.forEach((y,i)=>{if(y===ex)return;for(let k=-2;k<=2;k++){const j=w+k;if(j>=0&&j<52)a.push(D.d[zi][i][j])}});return a.sort((a,b)=>a-b)};
+const med=a=>a.length?(a[(a.length-1)>>1]+a[a.length>>1])/2:0;
+const lvl=(v,a)=>{if(v<MIN||v<=med(a))return 0;if(v>a[a.length-1])return 3;return a.filter(x=>x<=v).length/a.length>=.8?2:1};
+const mean=(zi,w)=>D.d[zi].reduce((s,r)=>s+r[w],0)/D.y.length;
+D.z.forEach((n,i)=>$('Z').add(new Option(n,i)));D.y.forEach(y=>$('Y').add(new Option((D.op.includes(y)?'Operational ':'Setup ')+y,y)));$('Y').add(new Option('Live: enter this week’s count','live'));$('Y').value=D.y[D.y.length-1];$('W').value=wk;
+Object.keys(RL).forEach(k=>{const b=document.createElement('button');b.textContent=RL[k];b.onclick=()=>{role=k;R()};b.dataset.k=k;$('R').appendChild(b)});
+function R(){
+ const y=$('Y').value,live=y==='live',yi=D.y.indexOf(+y),ex=live?0:+y;wk=+$('W').value;z=+$('Z').value;$('LV').hidden=!live;
+ const v=live?(+$('V').value||0):D.d[z][yi][wk],p=pool(z,wk,ex),L=lvl(v,p),B=$('B');
+ [...$('R').children].forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===role));
+ $('WO').textContent=(wk+1)+' (from '+wl(wk)+')';
+ B.style.background='var(--l'+L+')';B.style.color=L==1?'#1b1f1a':'#fff';
+ B.innerHTML='<div class="ic">'+IC[L]+'</div><div><div class="lv">'+N[L]+'</div><div>'+D.z[z]+', week '+(wk+1)+': <b>'+v+'</b> detections vs typical '+med(p)+' (range '+p[0]+'–'+p[p.length-1]+').'+(v<MIN?' Too few detections to flag.':'')+'</div></div>';
+ $('A').innerHTML='<li><b>'+RL[role]+':</b> '+A[role][L]+'</li>';
+ const m=D.y.map((_,i)=>0).length&&[...Array(52).keys()].map(w=>mean(z,w)),mx=Math.max(...m,1);
+ $('S').innerHTML='';$('ZN').textContent='— '+D.z[z];
+ m.forEach((x,w)=>{const c=x/mx>=.7?3:x/mx>=.35?2:x/mx>=.1?1:0,b=document.createElement('button'),i=document.createElement('i');
+  i.style.height=Math.max(4,x/mx*100)+'%';i.style.setProperty('--c',SC[c]);b.appendChild(i);
+  b.setAttribute('aria-label','Week '+(w+1)+', '+wl(w)+': '+SN[c]);b.title='Week '+(w+1)+' '+wl(w)+': '+SN[c];
+  if(w===wk)b.setAttribute('aria-current','true');b.onclick=()=>{$('W').value=w;R()};$('S').appendChild(b)});
+ const top=m.map((x,w)=>[x,w]).sort((a,b)=>b[0]-a[0]).slice(0,3).map(a=>a[1]).sort((a,b)=>a-b);
+ $('PL').innerHTML='<b>Plan around:</b> '+top.map(w=>'week '+(w+1)+' ('+wl(w)+')').join(', ')+' are typically the busiest.<br><b>Next 4 weeks, typical:</b> '+[1,2,3,4].map(k=>{const w=(wk+k)%52,x=m[w]/mx;return 'wk '+(w+1)+' '+SN[x>=.7?3:x>=.35?2:x>=.1?1:0]+' (~'+Math.round(m[w])+')'}).join('; ')+'.';
+ const rows=D.z.map((n,i)=>{const pp=pool(i,wk,ex),vv=live?(i===z?v:null):D.d[i][yi][wk];return{n,vv,md:med(pp),L:vv===null?-1:lvl(vv,pp)}}).sort((a,b)=>b.L-a.L);
+ $('T').innerHTML=rows.map(r=>'<tr><td>'+r.n+'</td><td>'+(r.vv===null?'—':r.vv)+'</td><td>'+r.md+'</td><td>'+(r.L<0?'—':IC[r.L]+' '+N[r.L])+'</td></tr>').join('');
+ $('AL').innerHTML=ALS.slice(0,25).map(a=>'<tr><td>'+a[0]+'</td><td>wk '+(a[1]+1)+' ('+wl(a[1])+')</td><td>'+D.z[a[2]]+'</td><td>'+IC[a[3]]+' '+N[a[3]]+'</td><td>'+a[4]+' vs '+a[5]+'</td><td>'+A[role][a[3]]+'</td></tr>').join('');$('ALN').textContent=ALS.length+' Alert or Critical weeks across '+D.op.join(' and ')+', each judged against all other years. Showing the strongest 25.';
+ $('SC').hidden=role!=='sci';
+ $('SM').textContent='Baseline: '+p.length+' weekly counts (same week ±2 weeks, '+(live?'all '+D.y.length+' years':'the other '+(D.y.length-1)+' years')+'). Watch: above median; Alert: at or above the 80th percentile of the baseline; Critical: above every baseline week; minimum '+MIN+' detections. Aqua-scale estimate of this count: about '+Math.round(v*0.137)+' (exploratory ratio 0.137, 95% CI 0.118–0.159). Three years is a small baseline; thresholds are provisional.';
+}
+const ALS=[];D.op.forEach(y=>{const yi=D.y.indexOf(y);D.z.forEach((n,i)=>{for(let w=0;w<52;w++){const p=pool(i,w,y),v=D.d[i][yi][w],l=lvl(v,p);if(l>=2)ALS.push([y,w,i,l,v,med(p)])}})});ALS.sort((a,b)=>b[3]-a[3]||b[4]-a[4]);
+$('FT').textContent='Yearly totals, all areas: '+D.y.map(y=>y+': '+D.tot[y].toLocaleString('en')).join(', ')+'. Large jumps between years can come from the sensor or the import, not only from fire.';
+['Z','W','Y','V'].forEach(i=>$(i).oninput=R);R();
+</script></body></html>

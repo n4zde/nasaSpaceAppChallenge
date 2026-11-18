@@ -10,6 +10,7 @@ import { InfoPanel } from "./components/InfoPanel";
 import { KeyFigures } from "./components/KeyFigures";
 import { MapView } from "./components/MapView";
 import { MethodView } from "./components/MethodView";
+import { AlertsView } from "./components/AlertsView";
 import { METRICS, Rail, UiState } from "./components/Rail";
 import RailResizer from "./components/RailResizer";
 import { ValidationView } from "./components/ValidationView";
@@ -21,6 +22,8 @@ import { byPlatformOrder, PLATFORM_COLOR } from "./lib/scales";
 
 const TABS = [
   ["series", "Time series"],
+  ["alerts", "Alerts"],
+  ["watch", "Watch"],
   ["compare", "Raw vs harmonised"],
   ["anomalies", "Seasons and anomalies"],
   ["validation", "Validation"],
@@ -218,6 +221,7 @@ export function App() {
           <button aria-pressed={!synthetic} onClick={() => switchDataset("real")}>Imported real data</button>
         </div>
         <span className="spacer" />
+        <a className="btn" href="/watch" target="_blank" rel="noopener">Open alerts page</a>
         {h && <StatusChip status={h.status} />}
       </header>
       {synthetic ? (
@@ -388,6 +392,12 @@ export function App() {
             <div className="tabpanel" role="tabpanel" id={"tab-" + tab} aria-labelledby={"tabbtn-" + tab}>
               {tab === "series" && hasData && summaryQ.data && (
                 <SeriesTab summary={summaryQ.data} h={harmUsable ? h : null} ui={ui} selected={selected} onPick={setSelected} />
+              )}
+              {tab === "alerts" && hasData && summaryQ.data && (
+                <AlertsView rows={summaryQ.data.series} h={harmUsable ? h : null} ui={ui} selected={selected} onPick={setSelected} />
+              )}
+              {tab === "watch" && (
+                <iframe className="watch-frame" title="Ember Watch — Türkiye pilot" src="/watch.html" />
               )}
               {tab === "compare" && (pairAvailable ? (
                 <CompareView h={h} loading={harmQ.loading} error={harmQ.error} view={[ui.dateStart, ui.dateEnd]} selected={selected} onPick={setSelected}

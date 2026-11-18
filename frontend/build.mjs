@@ -6,6 +6,7 @@ import { copyFileSync, mkdirSync } from "node:fs";
 const watch = process.argv.includes("--watch");
 mkdirSync("dist/assets", { recursive: true });
 copyFileSync("index.html", "dist/index.html");
+copyFileSync("../watch.html", "dist/watch.html");
 
 const opts = {
   entryPoints: { app: "src/main.tsx" },

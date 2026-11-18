@@ -41,7 +41,7 @@ LC_CLASSES = ["savanna", "grassland", "cropland", "forest"]
 @dataclass
 class SyntheticSpec:
     seed: int = 20261025
-    bbox: tuple = (-48.5, -11.5, -45.5, -9.0)
+    bbox: tuple = (25.5, 35.5, 45.0, 42.5)
     start: str = "2010-01-01"
     end: str = "2022-12-31"
     latent_km: int = 18

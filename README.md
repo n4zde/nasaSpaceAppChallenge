@@ -61,6 +61,11 @@ and the same folder, so the server and the seed use the same database.
 The database is created at `data\ember.sqlite`; to use another file set
 `$env:EMBER_DATABASE_URL = "sqlite:///C:\path\to\ember.sqlite"`.
 
+The **Watch** tab embeds a separate Türkiye pilot page built from real
+Suomi-NPP data, not the synthetic demo. After importing the relevant real
+data, regenerate it from the project root with `python build_watch.py`, then
+rebuild the frontend (`cd frontend; npm run build`).
+
 ### Linux / macOS
 
 ```bash
